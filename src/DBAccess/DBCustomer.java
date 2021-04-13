@@ -2,7 +2,6 @@ package DBAccess;
 
 import Database.DBConnection;
 import Model.Customer;
-import com.mysql.cj.xdevapi.Result;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
@@ -138,6 +137,8 @@ public class DBCustomer {
             PreparedStatement pStatement = DBConnection.getDbConnection().prepareStatement(sqlQuery);
             ResultSet resultSet = pStatement.executeQuery();
 
+            if (resultSet == null) return 1;
+
             while (resultSet.next()) {
                 // add 1 to the last customer ID
                 id = resultSet.getInt("Customer_ID") + 1;
@@ -166,6 +167,24 @@ public class DBCustomer {
             throwables.printStackTrace();
         }
 
+    }
+
+    public static int getCustomerId(String name) {
+        int id = 0;
+        try {
+            String sqlQuery = "SELECT customers.Customer_ID FROM customers WHERE Customer_Name = '" + name + "';";
+
+            PreparedStatement pStatement = DBConnection.getDbConnection().prepareStatement(sqlQuery);
+            ResultSet resultSet = pStatement.executeQuery();
+            while (resultSet.next()) {
+                // add 1 to the last customer ID
+                id = resultSet.getInt("Customer_ID");
+            }
+
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+        return id;
     }
 
 

@@ -146,7 +146,7 @@ public class AppointmentsController implements Initializable {
         // Filter appointments occurring in the next 7 days
         week.selectedProperty().addListener(((obs, wasPreviouslySelected, isNowSelected) -> {
             if (isNowSelected) {
-                Predicate<Appointment> predicate = i -> i.getDays() < 7;
+                Predicate<Appointment> predicate = i -> i.getDays() < 8;
                 filteredAppointments.setPredicate(predicate);
             }
         }));
@@ -154,10 +154,8 @@ public class AppointmentsController implements Initializable {
         // Filter appointments occurring in the next month
         month.selectedProperty().addListener(((obs, wasPreviouslySelected, isNowSelected) -> {
             if (isNowSelected) {
-                Predicate<Appointment> weekPred = i -> i.getDays() < 30;
+                Predicate<Appointment> weekPred = i -> i.getDays() < 31;
                 filteredAppointments.setPredicate(weekPred);
-            } else {
-                // ...
             }
         }));
 

@@ -86,24 +86,6 @@ public class CustomerEditController implements Initializable {
     }
 
     /**
-     * This method uses form details to insert a new customer into the database, and
-     * then switches back to the customer table scene
-     */
-    public void addCustomer(ActionEvent event) throws IOException
-    {
-
-        // Insert form data into database
-        DBCustomer.insertCustomer(DBCustomer.getNewCustomerId(), name.getText(), address.getText(), postcode.getText(), phone.getText(), DBStates.getStateId(state.getValue()));
-
-        // Load scene
-        Parent sceneParent = FXMLLoader.load(getClass().getResource("customers.fxml"));
-        Scene scene = new Scene(sceneParent);
-        Stage window = (Stage)((Node)event.getSource()).getScene().getWindow();
-        window.setScene(scene);
-        window.show();
-    }
-
-    /**
      * Method populates form fields by retrieving attributes
      * from customer object
      * @param customer

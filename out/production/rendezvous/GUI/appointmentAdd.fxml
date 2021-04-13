@@ -19,7 +19,7 @@
                 <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
             </padding>
             <children>
-                <Button fx:id="create" defaultButton="true" layoutX="730.0" layoutY="616.0" mnemonicParsing="false" styleClass="button-raised" text="CREATE APPOINTMENT">
+                <Button fx:id="create" defaultButton="true" layoutX="730.0" layoutY="616.0" mnemonicParsing="false" onAction="#createAppointment" styleClass="button-raised" text="CREATE APPOINTMENT">
                     <padding>
                         <Insets top="4.0" />
                     </padding>

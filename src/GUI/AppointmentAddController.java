@@ -1,9 +1,10 @@
 package GUI;
 
+import DBAccess.DBAppointments;
 import DBAccess.DBContacts;
-import DBAccess.DBCountries;
 import DBAccess.DBCustomer;
-import DBAccess.DBStates;
+import Model.Contact;
+import Model.Customer;
 import Utilities.Alerts;
 import Utilities.Time;
 import javafx.application.Platform;
@@ -16,13 +17,11 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.stage.Stage;
+import javafx.util.Callback;
 
 import java.io.IOException;
 import java.net.URL;
-import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.time.LocalTime;
-import java.time.temporal.ChronoUnit;
+import java.time.*;
 import java.util.Optional;
 import java.util.ResourceBundle;
 
@@ -45,7 +44,7 @@ public class AppointmentAddController implements Initializable {
     private TextField location;
 
     @FXML
-    private ComboBox<String> contact;
+    private ComboBox<Contact> contact;
 
     @FXML
     private TextField type;
@@ -57,7 +56,7 @@ public class AppointmentAddController implements Initializable {
     private DatePicker end;
 
     @FXML
-    private ComboBox<String> customer;
+    private ComboBox<Customer> customer;
 
     @FXML
     private Button customers_nav;
@@ -72,24 +71,41 @@ public class AppointmentAddController implements Initializable {
     @Override
     public void initialize (URL url, ResourceBundle rb) {
 
-        // Populate countries combo box
-        customer.getItems().addAll(DBCustomer.getAllCustomersString());
+
 
         // Populate contacts combo box
-        contact.getItems().addAll(DBContacts.getAllContactsString());
+        contact.getItems().addAll(DBContacts.getAllContacts());
+        // Set combo box values to contact name (instead of object reference)
+        Callback<ListView<Contact>, ListCell<Contact>> contactfactory = lv -> new ListCell<Contact>() {
+
+            @Override
+            protected void updateItem(Contact item, boolean empty) {
+                super.updateItem(item, empty);
+                setText(empty ? "" : item.getName());
+            }
+        };
+        contact.setCellFactory(contactfactory);
+        contact.setButtonCell(contactfactory.call(null));
+
+        // Populate customers combo box with customer objects
+        customer.getItems().addAll(DBCustomer.getAllCustomers());
+        // Set combo box values to customer name (instead of object reference)
+        Callback<ListView<Customer>, ListCell<Customer>> factory = lv -> new ListCell<Customer>() {
+
+            @Override
+            protected void updateItem(Customer item, boolean empty) {
+                super.updateItem(item, empty);
+                setText(empty ? "" : item.getName());
+            }
+        };
+        customer.setCellFactory(factory);
+        customer.setButtonCell(factory.call(null));
 
         // populate start time spinner
         startTime.setValueFactory(Time.populateTimeSpinner());
 
-        // populate start time spinner
+        // populate end time spinner
         endTime.setValueFactory(Time.populateTimeSpinner());
-
-
-        // Create localdatetime object from datepicker and spinner
-        // TODO move to its own method
-        //LocalDateTime startDateTime = LocalDateTime.of(start.getValue(), startTime.getValue());
-
-
 
         // Set focus to name box
         Platform.runLater(()->title.requestFocus());
@@ -97,15 +113,12 @@ public class AppointmentAddController implements Initializable {
     }
 
     /**
-     * This method switches scenes to the customer screen
+     * This method switches scenes to the appointments screen
      */
     public void switchToAppointments(ActionEvent event) throws IOException
     {
-//        /* Create alert dialog box */
-//        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-//        alert.setTitle("Cancel Confirmation");
-//        alert.setHeaderText("Cancel Add Customer");
-//        alert.setContentText("Are you sure you?");
+
+        // Confirmation button
         Optional<ButtonType> result = Alerts.cancelConfirm("Create Appointment").showAndWait();
         // Check if user selected "OK"
         if (result.get() == ButtonType.OK) {
@@ -115,6 +128,7 @@ public class AppointmentAddController implements Initializable {
             Stage window = (Stage)((Node)event.getSource()).getScene().getWindow();
             window.setScene(scene);
             window.show();
+
         }
     }
 
@@ -126,14 +140,29 @@ public class AppointmentAddController implements Initializable {
      * This method uses form details to insert a new customer into the database, and
      * then switches back to the customer table scene
      */
-    public void addCustomer(ActionEvent event) throws IOException
+    public void createAppointment(ActionEvent event) throws IOException
     {
 
+        // Create local time object
+        ZonedDateTime startDateTime = ZonedDateTime.of(start.getValue(), startTime.getValue(), ZoneId.systemDefault());
+        ZonedDateTime endDateTime = ZonedDateTime.of(end.getValue(), endTime.getValue(), ZoneId.systemDefault());
+
+
         // Insert form data into database
-        //DBCustomer.insertCustomer(DBCustomer.getNewCustomerId(), name.getText(), address.getText(), postcode.getText(), phone.getText(), DBStates.getStateId(state.getValue()));
+        DBAppointments.insertAppointment(
+            DBAppointments.getNewAppointmentId(),
+            title.getText(),
+            description.getText(),
+            location.getText(),
+            type.getText(),
+            startDateTime.withZoneSameInstant(ZoneOffset.UTC).toLocalDateTime(), // Convert to UTC for database
+            endDateTime.withZoneSameInstant(ZoneOffset.UTC).toLocalDateTime(),  // Convert to UTC for database
+            customer.getValue().getId(),
+            2, //TODO input USER ID
+            contact.getValue().getId());
 
         // Load scene
-        Parent sceneParent = FXMLLoader.load(getClass().getResource("customers.fxml"));
+        Parent sceneParent = FXMLLoader.load(getClass().getResource("appointments.fxml"));
         Scene scene = new Scene(sceneParent);
         Stage window = (Stage)((Node)event.getSource()).getScene().getWindow();
         window.setScene(scene);

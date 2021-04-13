@@ -3,6 +3,7 @@ package GUI;
 import DBAccess.DBCountries;
 import DBAccess.DBCustomer;
 import DBAccess.DBStates;
+import Utilities.Alerts;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -66,11 +67,7 @@ public class CustomerAddController implements Initializable {
     public void switchToCustomer(ActionEvent event) throws IOException
     {
         /* Create alert dialog box */
-        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-        alert.setTitle("Cancel Confirmation");
-        alert.setHeaderText("Cancel Add Customer");
-        alert.setContentText("Are you sure you?");
-        Optional<ButtonType> result = alert.showAndWait();
+        Optional<ButtonType> result = Alerts.cancelConfirm("Add customer").showAndWait();
         // Check if user selected "OK"
         if (result.get() == ButtonType.OK) {
             // Switch to scene
@@ -90,7 +87,13 @@ public class CustomerAddController implements Initializable {
     {
 
         // Insert form data into database
-        DBCustomer.insertCustomer(DBCustomer.getNewCustomerId(), name.getText(), address.getText(), postcode.getText(), phone.getText(), DBStates.getStateId(state.getValue()));
+        DBCustomer.insertCustomer(
+                DBCustomer.getNewCustomerId(),
+                name.getText(),
+                address.getText(),
+                postcode.getText(),
+                phone.getText(),
+                DBStates.getStateId(state.getValue()));
 
         // Load scene
         Parent sceneParent = FXMLLoader.load(getClass().getResource("customers.fxml"));
