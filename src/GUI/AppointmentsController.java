@@ -3,7 +3,9 @@ package GUI;
 import DBAccess.DBAppointments;
 import Model.Appointment;
 import Utilities.Alerts;
+import Utilities.Time;
 import javafx.application.Platform;
+import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
@@ -22,6 +24,7 @@ import javafx.stage.Stage;
 import java.io.IOException;
 import java.net.URL;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.Optional;
 import java.util.ResourceBundle;
 import java.util.function.Predicate;
@@ -100,11 +103,46 @@ public class AppointmentsController implements Initializable {
         appointments.addAll(DBAppointments.getMonthAppointments());
         appTable.setItems(appointments);
 
+        // Date time formatter for start/end columns
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MM/dd hh:mm");
+
+        // Custom formatting of the start column
+        start.setCellFactory(column -> {
+            return new TableCell<Appointment, LocalDateTime>() {
+                @Override
+                protected void updateItem(LocalDateTime item, boolean empty) {super.updateItem(item, empty);
+                    if (item == null || empty) {
+                        setText(null);
+                        setStyle("");
+                    } else {
+                        // Format date and time.
+                        setText(formatter.format(item));
+                    }
+                }
+            };
+        });
+
+        // Custom formatting of the end column
+        end.setCellFactory(column -> {
+            return new TableCell<Appointment, LocalDateTime>() {
+                @Override
+                protected void updateItem(LocalDateTime item, boolean empty) {super.updateItem(item, empty);
+                    if (item == null || empty) {
+                        setText(null);
+                        setStyle("");
+                    } else {
+                        // Format date and time.
+                        setText(formatter.format(item));
+                    }
+                }
+            };
+        });
+
         // Initialize Radio buttons
         timeSelect = new ToggleGroup();
         this.week.setToggleGroup(timeSelect);
         this.month.setToggleGroup(timeSelect);
-        timeSelect.selectToggle(this.month);
+        timeSelect.selectToggle(this.week);
 
         /*
          * Search function for appointments table
@@ -142,14 +180,14 @@ public class AppointmentsController implements Initializable {
         // Load sorted and filtered data into parts table
         appTable.setItems(sortedData);
 
-
+        LocalDateTime dateTime = LocalDateTime.now();
         /*
          * Radio button functionality
          */
         // Filter appointments occurring in the next 7 days
         week.selectedProperty().addListener(((obs, wasPreviouslySelected, isNowSelected) -> {
             if (isNowSelected) {
-                Predicate<Appointment> predicate = i -> i.getDays() < 8;
+                Predicate<Appointment> predicate = i -> Time.getWeekOfYear(i.getStart()) == Time.getWeekOfYear(dateTime);
                 filteredAppointments.setPredicate(predicate);
             }
         }));
@@ -157,13 +195,16 @@ public class AppointmentsController implements Initializable {
         // Filter appointments occurring in the next month
         month.selectedProperty().addListener(((obs, wasPreviouslySelected, isNowSelected) -> {
             if (isNowSelected) {
-                Predicate<Appointment> weekPred = i -> i.getDays() < 31;
+                Predicate<Appointment> weekPred = i -> i.getStart().getMonth() == dateTime.getMonth();
                 filteredAppointments.setPredicate(weekPred);
             }
         }));
 
         // Set focus to search box
         Platform.runLater(() -> search.requestFocus());
+
+        // Sort table by appointment start date/time
+        appTable.getSortOrder().setAll(start);
     }
 
 

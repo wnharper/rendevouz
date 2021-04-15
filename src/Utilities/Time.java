@@ -6,6 +6,9 @@ import java.time.*;
 import java.time.format.DateTimeFormatter;
 import java.time.format.FormatStyle;
 import java.time.temporal.ChronoUnit;
+import java.time.temporal.TemporalField;
+import java.time.temporal.WeekFields;
+import java.util.Locale;
 
 public class Time {
 
@@ -48,15 +51,19 @@ public class Time {
      * @param ltc
      * @return local time in String format
      */
-
     public static LocalDateTime utcToLocalTime(LocalDateTime ltc) {
-
         ZonedDateTime startZdt = ZonedDateTime.of(ltc, ZoneOffset.UTC);
         ZonedDateTime local = startZdt.withZoneSameInstant(ZoneId.systemDefault());
         return local.toLocalDateTime();
     }
 
-    public static String shortTimeFormatter(LocalDateTime ltc) {
-        return DateTimeFormatter.ofLocalizedDateTime(FormatStyle.SHORT).format(ltc);
+    /**
+     * Method returns the week of the year
+     * @param ldt LocalDateTime
+     * @return int week of the year
+     */
+    public static int getWeekOfYear(LocalDateTime ldt) {
+        TemporalField weekOfYear = WeekFields.of(Locale.getDefault()).weekOfWeekBasedYear();
+        return ldt.get(weekOfYear);
     }
 }
