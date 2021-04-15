@@ -1,27 +1,49 @@
 package Model;
 
+import java.time.LocalDateTime;
+
 public class Appointment {
     private int id;
     private String title;
     private String description;
     private String location;
     private String contact;
+    private int contactId;
     private String type;
-    private String start;
-    private String end;
+    private LocalDateTime start;
+    private LocalDateTime end;
     private String customer;
+    private int customerId;
     private int days;
 
-    public Appointment(int id, String title, String description, String location, String contact, String type, String start, String end, String customer, int days) {
+    public int getCustomerId() {
+        return customerId;
+    }
+
+    public void setCustomerId(int customerId) {
+        this.customerId = customerId;
+    }
+
+    public int getContactId() {
+        return contactId;
+    }
+
+    public void setContactId(int contactId) {
+        this.contactId = contactId;
+    }
+
+    public Appointment(int id, String title, String description, String location, String contact, int contactId, String type, LocalDateTime start, LocalDateTime end, String customer, int customerId, int days) {
         this.id = id;
         this.title = title;
         this.description = description;
         this.location = location;
         this.contact = contact;
+        this.contactId = contactId;
         this.type = type;
         this.start = start;
         this.end = end;
         this.customer = customer;
+        this.customerId = customerId;
         this.days = days;
     }
 
@@ -73,19 +95,19 @@ public class Appointment {
         this.type = type;
     }
 
-    public String getStart() {
+    public LocalDateTime getStart() {
         return start;
     }
 
-    public void setStart(String start) {
+    public void setStart(LocalDateTime start) {
         this.start = start;
     }
 
-    public String getEnd() {
+    public LocalDateTime getEnd() {
         return end;
     }
 
-    public void setEnd(String end) {
+    public void setEnd(LocalDateTime end) {
         this.end = end;
     }
 

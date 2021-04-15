@@ -111,7 +111,7 @@ public class DBCustomer {
 
         try {
             String sqlQuery = "UPDATE customers SET Customer_Name = '" + name + "', Address = '" + address + "', Postal_Code = '" + postcode +
-                              "', Phone = '" + phone + "', Last_Update = now(), Last_Updated_By = 'Warren', Division_ID = " + stateID + " WHERE Customer_ID = " + customerID + ";";
+                              "', Phone = '" + phone + "', Last_Update = now(), Last_Updated_By = 'Warren', Division_ID = " + stateID + " WHERE Customer_ID = " + customerID + ";"; //TODO USER ID
 
             Statement statement = DBConnection.getDbConnection().createStatement();
             statement.execute(sqlQuery);
@@ -151,7 +151,7 @@ public class DBCustomer {
     }
 
     /**
-     * Method takes deletes customer in database according to customer ID
+     * Method deletes customer in database according to customer ID
      * @param customerID
      */
     public static void deleteCustomer(int customerID) {
@@ -169,23 +169,9 @@ public class DBCustomer {
 
     }
 
-    public static int getCustomerId(String name) {
-        int id = 0;
-        try {
-            String sqlQuery = "SELECT customers.Customer_ID FROM customers WHERE Customer_Name = '" + name + "';";
 
-            PreparedStatement pStatement = DBConnection.getDbConnection().prepareStatement(sqlQuery);
-            ResultSet resultSet = pStatement.executeQuery();
-            while (resultSet.next()) {
-                // add 1 to the last customer ID
-                id = resultSet.getInt("Customer_ID");
-            }
 
-        } catch (SQLException throwables) {
-            throwables.printStackTrace();
-        }
-        return id;
-    }
+
 
 
 }

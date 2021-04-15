@@ -91,4 +91,9 @@ public class Customer {
     public void setAppointments(int appointments) {
         this.appointments = appointments;
     }
+
+    @Override
+    public String toString(){
+        return this.name;
+    }
 }

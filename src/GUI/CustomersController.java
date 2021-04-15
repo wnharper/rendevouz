@@ -2,6 +2,7 @@ package GUI;
 
 import DBAccess.DBCustomer;
 import Model.Customer;
+import Utilities.Alerts;
 import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -136,7 +137,7 @@ public class CustomersController implements Initializable {
     }
 
     /**
-     * This method switches to the modify part scene
+     * This method switches to the edit customer scene
      */
     public void editCustomer(ActionEvent event) throws IOException
     {
@@ -159,26 +160,19 @@ public class CustomersController implements Initializable {
         window.show();
     }
 
+    /**
+     * This method deletes a customer from a the customer table
+     */
     public void deleteCustomer() {
 
         // Create alert dialog box
         if (customerTable.getSelectionModel().getSelectedItem().getAppointments() > 0) {
-            Alert alert1 = new Alert(Alert.AlertType.ERROR);
-            alert1.setTitle("Associated Appointments");
-            alert1.setHeaderText("Customer has associated appointments");
-            alert1.setContentText("Delete customer's appointments and try again");
-            alert1.showAndWait();
+            Alerts.errorBox("Customer has active appointments!", "Remove customer's appointments and try again.");
             return;
         }
 
-        // Create alert dialog box
-        Alert alert2 = new Alert(Alert.AlertType.CONFIRMATION);
-        alert2.setTitle("Delete Confirmation");
-        alert2.setHeaderText("Delete the selected customer");
-        alert2.setContentText("Are you sure you?");
-
-        // Create confirmation button
-        Optional<ButtonType> result = alert2.showAndWait();
+        // Delete confirmation
+        Optional<ButtonType> result = Alerts.deleteConfirm("Delete selected customer?").showAndWait();
         // Check if user selected "OK"
         if (result.get() == ButtonType.OK) {
             // Delete selected row

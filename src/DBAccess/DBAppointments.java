@@ -2,18 +2,12 @@ package DBAccess;
 
 import Database.DBConnection;
 import Model.Appointment;
-import Utilities.Alerts;
 import Utilities.Time;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
 import java.sql.*;
 import java.time.LocalDateTime;
-import java.time.ZoneId;
-import java.time.ZoneOffset;
-import java.time.ZonedDateTime;
-import java.time.format.DateTimeFormatter;
-import java.time.format.FormatStyle;
 
 public class DBAppointments {
 
@@ -26,7 +20,7 @@ public class DBAppointments {
 
         try {
             String sqlQuery = "SELECT appointments.Appointment_ID, appointments.Title, appointments.Description, appointments.Location, \n" +
-                    "contacts.Contact_Name, appointments.Type, appointments.Start, appointments.End, customers.Customer_Name, datediff(End, now()) AS 'Days' FROM appointments\n" +
+                    "contacts.Contact_Name, appointments.Contact_ID, appointments.Type, appointments.Start, appointments.End, customers.Customer_Name, appointments.Customer_ID, datediff(End, now()) AS 'Days' FROM appointments\n" +
                     "INNER JOIN customers ON appointments.Customer_ID = customers.Customer_ID\n" +
                     "INNER JOIN contacts ON appointments.Contact_ID = contacts.Contact_ID;";
 
@@ -40,12 +34,14 @@ public class DBAppointments {
                 String description = resultSet.getString("Description");
                 String location = resultSet.getString("Location");
                 String contact = resultSet.getString("Contact_Name");
+                int contactId = resultSet.getInt("Contact_ID");
                 String type = resultSet.getString("Type");
-                String start = Time.utcToLocalTime(resultSet.getObject("Start", LocalDateTime.class));
-                String end = Time.utcToLocalTime(resultSet.getObject("End", LocalDateTime.class));
+                LocalDateTime start = Time.utcToLocalTime(resultSet.getObject("Start", LocalDateTime.class));
+                LocalDateTime end = Time.utcToLocalTime(resultSet.getObject("End", LocalDateTime.class));
                 String customerName = resultSet.getString("Customer_Name");
+                int customerId = resultSet.getInt("Customer_ID");
                 int days = resultSet.getInt("Days");
-                Appointment appointment = new Appointment(appId,title, description, location, contact, type, start, end, customerName, days);
+                Appointment appointment = new Appointment(appId,title, description, location, contact, contactId, type, start, end, customerName, customerId, days);
 
                 appointmentsList.add(appointment);
             }
@@ -83,6 +79,33 @@ public class DBAppointments {
     }
 
     /**
+     * Method takes appointment attributes and updates the appointment (via Id) in the database
+     * @param appointmentId
+     * @param title
+     * @param description
+     * @param location
+     * @param type
+     * @param start
+     * @param end
+     */
+    public static void updateAppointment(int appointmentId, String title, String description, String location, String type, LocalDateTime start, LocalDateTime end, int customerId, int userId, int contactId) {
+
+        try {
+            String sqlQuery = "UPDATE appointments SET Title ='" + title + "', Description='" + description + "', Location ='"
+                    + location + "', Type = '" + type + "', Start = '" + start + "', End = '" + end + "', Last_Updated_By = 'TODO' , Customer_ID = "
+                    + customerId + ", User_ID = " + userId + ", Contact_ID = " + contactId + " WHERE Appointment_ID = " + appointmentId + ";"; // TODO user id
+
+            Statement statement = DBConnection.getDbConnection().createStatement();
+            statement.execute(sqlQuery);
+            statement.close();
+
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+
+    }
+
+    /**
      * Method returns a new appointments ID by retrieving the last appointment ID in the
      * appointments table and adding 1.
      * @return new customer ID int
@@ -107,5 +130,24 @@ public class DBAppointments {
             throwables.printStackTrace();
         }
         return id;
+    }
+
+    /**
+     * Method takes deletes appointment in database according to appointment ID
+     * @param appointmentId
+     */
+    public static void deleteAppointment(int appointmentId) {
+
+        try {
+            String sqlQuery = "DELETE FROM appointments WHERE Appointment_ID = " + appointmentId + ";";
+
+            Statement statement = DBConnection.getDbConnection().createStatement();
+            statement.execute(sqlQuery);
+            statement.close();
+
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+
     }
 }

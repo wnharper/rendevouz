@@ -1,10 +1,6 @@
 package Utilities;
 
-import Model.Customer;
-import javafx.scene.control.ListCell;
-import javafx.scene.control.ListView;
 import javafx.scene.control.SpinnerValueFactory;
-import javafx.util.Callback;
 
 import java.time.*;
 import java.time.format.DateTimeFormatter;
@@ -53,10 +49,14 @@ public class Time {
      * @return local time in String format
      */
 
-    public static String utcToLocalTime(LocalDateTime ltc) {
+    public static LocalDateTime utcToLocalTime(LocalDateTime ltc) {
 
         ZonedDateTime startZdt = ZonedDateTime.of(ltc, ZoneOffset.UTC);
         ZonedDateTime local = startZdt.withZoneSameInstant(ZoneId.systemDefault());
-        return DateTimeFormatter.ofLocalizedDateTime(FormatStyle.SHORT).format(local);
+        return local.toLocalDateTime();
+    }
+
+    public static String shortTimeFormatter(LocalDateTime ltc) {
+        return DateTimeFormatter.ofLocalizedDateTime(FormatStyle.SHORT).format(ltc);
     }
 }

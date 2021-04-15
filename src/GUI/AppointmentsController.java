@@ -2,6 +2,7 @@ package GUI;
 
 import DBAccess.DBAppointments;
 import Model.Appointment;
+import Utilities.Alerts;
 import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -20,6 +21,8 @@ import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.net.URL;
+import java.time.LocalDateTime;
+import java.util.Optional;
 import java.util.ResourceBundle;
 import java.util.function.Predicate;
 
@@ -47,10 +50,10 @@ public class AppointmentsController implements Initializable {
     private TableColumn<Appointment, String> type;
 
     @FXML
-    private TableColumn<Appointment, String> start;
+    private TableColumn<Appointment, LocalDateTime> start;
 
     @FXML
-    private TableColumn<Appointment, String> end;
+    private TableColumn<Appointment, LocalDateTime> end;
 
     @FXML
     private TableColumn<Appointment, String> customer;
@@ -90,8 +93,8 @@ public class AppointmentsController implements Initializable {
         location.setCellValueFactory(new PropertyValueFactory<Appointment, String>("location"));
         contact.setCellValueFactory(new PropertyValueFactory<Appointment, String>("contact"));
         type.setCellValueFactory(new PropertyValueFactory<Appointment, String>("type"));
-        start.setCellValueFactory(new PropertyValueFactory<Appointment, String>("start"));
-        end.setCellValueFactory(new PropertyValueFactory<Appointment, String>("end"));
+        start.setCellValueFactory(new PropertyValueFactory<Appointment, LocalDateTime>("start"));
+        end.setCellValueFactory(new PropertyValueFactory<Appointment, LocalDateTime>("end"));
         customer.setCellValueFactory(new PropertyValueFactory<Appointment, String>("customer"));
 
         appointments.addAll(DBAppointments.getMonthAppointments());
@@ -184,6 +187,45 @@ public class AppointmentsController implements Initializable {
         Parent sceneParent = FXMLLoader.load(getClass().getResource("appointmentAdd.fxml"));
         Scene scene = new Scene(sceneParent);
         Stage window = (Stage)((Node)event.getSource()).getScene().getWindow();
+        window.setScene(scene);
+        window.show();
+    }
+
+    /**
+     * This method deletes an appointment from a the appointment table
+     */
+    public void deleteAppointment() {
+
+        // Delete confirmation
+        Optional<ButtonType> result = Alerts.deleteConfirm("Delete selected appointment?").showAndWait();
+        // Check if user selected "OK"
+        if (result.get() == ButtonType.OK) {
+            // Delete selected row
+            DBAppointments.deleteAppointment(appTable.getSelectionModel().getSelectedItem().getId());
+            appointments.remove(appTable.getSelectionModel().getSelectedItem());
+        }
+    }
+
+    /**
+     * This method switches to the edit appointments scene
+     */
+    public void editAppointment(ActionEvent event) throws IOException
+    {
+
+        FXMLLoader loader = new FXMLLoader();
+        loader.setLocation(getClass().getResource("appointmentsEdit.fxml"));
+        Parent parent = loader.load();
+
+        Scene scene = new Scene(parent);
+
+        // Load and access the controller
+        AppointmentEditController controller = loader.getController();
+
+        // populate form fields using appointment object from table
+        controller.populateFields(appTable.getSelectionModel().getSelectedItem());
+
+        Stage window = (Stage)((Node)event.getSource()).getScene().getWindow();
+
         window.setScene(scene);
         window.show();
     }
