@@ -31,7 +31,7 @@
                   <TableColumn fx:id="customer" minWidth="0.0" prefWidth="140.0" text="Customer" />
                     </columns>
                 </TableView>
-            <Label layoutX="730.0" layoutY="10.0" styleClass="label-help-tip" text="Use + icon to view more columns" />
+            <Label layoutX="723.0" layoutY="10.0" styleClass="label-help-tip" text="Click + icon to view more columns" />
             </children>
         </AnchorPane>
         <Button fx:id="add" defaultButton="true" layoutX="923.0" layoutY="59.0" mnemonicParsing="false" onAction="#createAppointment" styleClass="button-raised" text="CREATE APPOINTMENT">

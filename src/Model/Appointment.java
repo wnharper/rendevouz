@@ -16,22 +16,7 @@ public class Appointment {
     private int customerId;
     private int days;
 
-    public int getCustomerId() {
-        return customerId;
-    }
-
-    public void setCustomerId(int customerId) {
-        this.customerId = customerId;
-    }
-
-    public int getContactId() {
-        return contactId;
-    }
-
-    public void setContactId(int contactId) {
-        this.contactId = contactId;
-    }
-
+    // Full constructor
     public Appointment(int id, String title, String description, String location, String contact, int contactId, String type, LocalDateTime start, LocalDateTime end, String customer, int customerId, int days) {
         this.id = id;
         this.title = title;
@@ -47,9 +32,15 @@ public class Appointment {
         this.days = days;
     }
 
-    public int getId() {
-        return id;
+    // Reduced constructor to compare customer appointment times
+    public Appointment(int id, LocalDateTime start, LocalDateTime end, int customerId) {
+        this.id = id;
+        this.start = start;
+        this.end = end;
+        this.customerId = customerId;
     }
+
+    public int getId() { return id; }
 
     public void setId(int id) {
         this.id = id;
@@ -83,9 +74,7 @@ public class Appointment {
         return contact;
     }
 
-    public void setContact(String contact) {
-        this.contact = contact;
-    }
+    public void setContact(String contact) { this.contact = contact; }
 
     public String getType() {
         return type;
@@ -119,11 +108,15 @@ public class Appointment {
         this.customer = customer;
     }
 
-    public int getDays() {
-        return days;
-    }
+    public int getDays() { return days; }
 
-    public void setDays(int days) {
-        this.days = days;
-    }
+    public void setDays(int days) { this.days = days; }
+
+    public int getCustomerId() { return customerId; }
+
+    public void setCustomerId(int customerId) { this.customerId = customerId; }
+
+    public int getContactId() { return contactId; }
+
+    public void setContactId(int contactId) { this.contactId = contactId; }
 }

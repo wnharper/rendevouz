@@ -39,6 +39,7 @@
                 </VBox>
                 <Spinner fx:id="startTime" layoutX="345.0" layoutY="321.0" />
                 <Spinner fx:id="endTime" layoutX="344.0" layoutY="388.0" />
+            <Label fx:id="businessHours" layoutX="539.0" layoutY="310.0" prefHeight="47.0" prefWidth="310.0" styleClass="label-error" wrapText="true" />
             </children>
         </AnchorPane>
         <AnchorPane layoutX="-5.0" prefHeight="112.0" prefWidth="175.0" style="-fx-background-color: E74061;">

@@ -104,7 +104,7 @@ public class AppointmentsController implements Initializable {
         appTable.setItems(appointments);
 
         // Date time formatter for start/end columns
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MM/dd hh:mm");
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MM/dd hh:mm a");
 
         // Custom formatting of the start column
         start.setCellFactory(column -> {

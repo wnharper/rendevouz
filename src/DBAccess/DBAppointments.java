@@ -150,4 +150,33 @@ public class DBAppointments {
         }
 
     }
+
+    /**
+     * Method returns a list of all appointments occuring in the next month
+     * @return Observable List
+     */
+    public static ObservableList<Appointment> getCustomerAppointments(int customer_id) {
+        ObservableList<Appointment> appointmentsList = FXCollections.observableArrayList();
+
+        try {
+            String sqlQuery = "SELECT appointments.Appointment_ID, appointments.Start, appointments.End, appointments.Customer_ID FROM appointments WHERE Customer_ID = " + customer_id + ";";
+
+            PreparedStatement pStatement = DBConnection.getDbConnection().prepareStatement(sqlQuery);
+
+            ResultSet resultSet = pStatement.executeQuery();
+
+            while (resultSet.next()) {
+                int appId = resultSet.getInt("Appointment_ID");
+                LocalDateTime start = resultSet.getObject("Start", LocalDateTime.class);
+                LocalDateTime end = resultSet.getObject("End", LocalDateTime.class);
+                int customerId = resultSet.getInt("Customer_ID");
+                Appointment appointment = new Appointment(appId, start, end, customerId);
+
+                appointmentsList.add(appointment);
+            }
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+        return appointmentsList;
+    }
 }

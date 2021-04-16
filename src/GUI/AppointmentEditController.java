@@ -32,51 +32,43 @@ import java.util.ResourceBundle;
 public class AppointmentEditController implements Initializable {
 
     // Form fields
-    @FXML
-    private Button save;
+    @FXML private Button save;
 
-    @FXML
-    private Button cancel;
+    @FXML private Button cancel;
 
-    @FXML
-    private TextField title;
+    @FXML private TextField title;
 
-    @FXML
-    private TextField description;
+    @FXML private TextField description;
 
-    @FXML
-    private TextField location;
+    @FXML private TextField location;
 
-    @FXML
-    private ComboBox<Contact> contact;
+    @FXML private ComboBox<Contact> contact;
 
-    @FXML
-    private TextField type;
+    @FXML private TextField type;
 
-    @FXML
-    private DatePicker start;
+    @FXML private DatePicker start;
 
-    @FXML
-    private DatePicker end;
+    @FXML private DatePicker end;
 
-    @FXML
-    private ComboBox<Customer> customer;
+    @FXML private ComboBox<Customer> customer;
 
-    @FXML
-    private Button customers_nav;
+    @FXML private Button customers_nav;
 
-    @FXML
-    private Spinner<LocalTime> startTime;
+    @FXML private Spinner<LocalTime> startTime;
 
-    @FXML
-    private Spinner<LocalTime> endTime;
+    @FXML private Spinner<LocalTime> endTime;
+
+    @FXML private Label businessHours;
+
+
 
     // Contact and Customer lists for combo boxes
     private ObservableList<Contact> contactsList = FXCollections.observableArrayList();
     private ObservableList<Customer> customerList = FXCollections.observableArrayList();
 
-    // stores incoming appointment ID
+    // stores incoming appointment, customer ID
     private int appointmentId;
+    private int customerId;
 
     // Initialize method, required in order for the UI/Scene to launch and function
     @Override
@@ -109,7 +101,7 @@ public class AppointmentEditController implements Initializable {
     {
 
         // Confirmation button
-        Optional<ButtonType> result = Alerts.cancelConfirm("Create Appointment").showAndWait();
+        Optional<ButtonType> result = Alerts.cancelConfirm("Edit Appointment").showAndWait();
         // Check if user selected "OK"
         if (result.get() == ButtonType.OK) {
             // Switch to scene
@@ -132,8 +124,33 @@ public class AppointmentEditController implements Initializable {
 
         // Create local time object
         ZonedDateTime startDateTime = ZonedDateTime.of(start.getValue(), startTime.getValue(), ZoneId.systemDefault());
+        LocalDateTime startLtc = startDateTime.withZoneSameInstant(ZoneOffset.UTC).toLocalDateTime(); // Convert to UTC for database
         ZonedDateTime endDateTime = ZonedDateTime.of(end.getValue(), endTime.getValue(), ZoneId.systemDefault());
+        LocalDateTime endLtc = endDateTime.withZoneSameInstant(ZoneOffset.UTC).toLocalDateTime(); // Convert to UTC for database
 
+        // Check that start time is before end time
+        if(startDateTime.isAfter(endDateTime)) {
+            businessHours.setText("Start time/date must occur before end time/date");
+            return;
+        }
+        // Check if date / time are in business hours
+        if (!Time.inBusinessHours(startDateTime, endDateTime)){
+            businessHours.setText("Start and end time must fall within business hours, 8AM - 10PM Monday - Friday EST");
+            return;
+        }
+
+        // Check for overlapping appointment times
+        ObservableList<Appointment> customerTimes = DBAppointments.getCustomerAppointments(customerId);
+        for (Appointment appt : customerTimes) {
+            // Do not compare current appointment
+            if (appt.getId() != appointmentId) {
+                // Check if start and end times conflict with any other appointments
+                if ((appt.getStart().isAfter(startLtc) && appt.getStart().isBefore(endLtc)) || appt.getEnd().isAfter(startLtc) && appt.getEnd().isBefore(endLtc)){
+                    businessHours.setText("Appointment time conflicts with another appointment (" + Time.ToTimeString(Time.utcToLocalTime(appt.getStart())) + " - " + Time.ToTimeString(Time.utcToLocalTime(appt.getEnd())) + ")");
+                    return;
+                }
+            }
+        }
 
         // Insert form data into database
         DBAppointments.updateAppointment(
@@ -142,8 +159,8 @@ public class AppointmentEditController implements Initializable {
                 description.getText(),
                 location.getText(),
                 type.getText(),
-                startDateTime.withZoneSameInstant(ZoneOffset.UTC).toLocalDateTime(), // Convert to UTC for database
-                endDateTime.withZoneSameInstant(ZoneOffset.UTC).toLocalDateTime(),  // Convert to UTC for database
+                startLtc,
+                endLtc,
                 customer.getValue().getId(),
                 2, //TODO input USER ID
                 contact.getValue().getId());
@@ -189,6 +206,7 @@ public class AppointmentEditController implements Initializable {
 
         // Set Appointment ID
         appointmentId = appointment.getId();
+        customerId = appointment.getCustomerId();
 
     }
 

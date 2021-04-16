@@ -67,6 +67,9 @@ public class AppointmentAddController implements Initializable {
     @FXML
     private Spinner<LocalTime> endTime;
 
+    @FXML
+    private Label businessHours;
+
     // Initialize method, required in order for the UI/Scene to launch and function
     @Override
     public void initialize (URL url, ResourceBundle rb) {
@@ -132,9 +135,6 @@ public class AppointmentAddController implements Initializable {
         }
     }
 
-    public void dateTest(ActionEvent event) {
-        LocalDate value = end.getValue();
-    }
 
     /**
      * This method uses form details to insert a new customer into the database, and
@@ -146,6 +146,18 @@ public class AppointmentAddController implements Initializable {
         // Create local time object
         ZonedDateTime startDateTime = ZonedDateTime.of(start.getValue(), startTime.getValue(), ZoneId.systemDefault());
         ZonedDateTime endDateTime = ZonedDateTime.of(end.getValue(), endTime.getValue(), ZoneId.systemDefault());
+
+        // Check that start time is before end time
+        if(startDateTime.isAfter(endDateTime)) {
+            businessHours.setText("Start and end time must fall within business hours, 8AM - 10PM Monday - Friday EST");
+            return;
+        }
+        // Check if date / time are in business hours
+        if (!Time.inBusinessHours(startDateTime, endDateTime)){
+            businessHours.setText("Start and end time must fall within business hours, 8AM - 10PM Monday - Friday EST");
+            return;
+        }
+
 
 
         // Insert form data into database
