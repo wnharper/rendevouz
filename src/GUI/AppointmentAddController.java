@@ -3,11 +3,13 @@ package GUI;
 import DBAccess.DBAppointments;
 import DBAccess.DBContacts;
 import DBAccess.DBCustomer;
+import Model.Appointment;
 import Model.Contact;
 import Model.Customer;
 import Utilities.Alerts;
 import Utilities.Time;
 import javafx.application.Platform;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -28,53 +30,36 @@ import java.util.ResourceBundle;
 public class AppointmentAddController implements Initializable {
 
     // Form fields
-    @FXML
-    private Button create;
+    @FXML private TextField title;
+    @FXML private TextField description;
+    @FXML private ComboBox<String> location;
+    @FXML private ComboBox<Contact> contact;
+    @FXML private ComboBox<String> type;
+    @FXML private DatePicker start;
+    @FXML private DatePicker end;
+    @FXML private ComboBox<Customer> customer;
+    @FXML private Spinner<LocalTime> startTime;
+    @FXML private Spinner<LocalTime> endTime;
 
-    @FXML
-    private Button cancel;
-
-    @FXML
-    private TextField title;
-
-    @FXML
-    private TextField description;
-
-    @FXML
-    private TextField location;
-
-    @FXML
-    private ComboBox<Contact> contact;
-
-    @FXML
-    private TextField type;
-
-    @FXML
-    private DatePicker start;
-
-    @FXML
-    private DatePicker end;
-
-    @FXML
-    private ComboBox<Customer> customer;
-
-    @FXML
-    private Button customers_nav;
-
-    @FXML
-    private Spinner<LocalTime> startTime;
-
-    @FXML
-    private Spinner<LocalTime> endTime;
-
-    @FXML
-    private Label businessHours;
+    // Form error labels
+    @FXML private Label dateTimeError;
+    @FXML private Label titleError;
+    @FXML private Label descriptionError;
+    @FXML private Label locationError;
+    @FXML private Label contactError;
+    @FXML private Label typeError;
+    @FXML private Label customerError;
+    @FXML private Label dateTimeEndError;
 
     // Initialize method, required in order for the UI/Scene to launch and function
     @Override
     public void initialize (URL url, ResourceBundle rb) {
 
+        // Populate appointment locations combo box
+        location.getItems().addAll(Appointment.locations());
 
+        // Populate appointment types combo box
+        type.getItems().addAll(Appointment.appointmentTypes());
 
         // Populate contacts combo box
         contact.getItems().addAll(DBContacts.getAllContacts());
@@ -143,21 +128,47 @@ public class AppointmentAddController implements Initializable {
     public void createAppointment(ActionEvent event) throws IOException
     {
 
+        /*
+        Form validation
+         */
+        if (Alerts.isFieldEmpty(title, titleError, "Enter a title")) return;
+        if (Alerts.isFieldEmpty(description, descriptionError, "Enter a description")) return;
+        if (Alerts.isSelectionEmpty(location, locationError, "Select a location")) return;
+        if (Alerts.isSelectionEmpty(contact, contactError, "Select a contact")) return;
+        if (Alerts.isSelectionEmpty(type, typeError, "Select an appointment type")) return;
+        if (Alerts.isDateSelected(start, dateTimeError, "Select a start date")) return;
+        if (Alerts.isDateSelected(end, dateTimeEndError, "Select an end date")) return;
+        if (Alerts.isSelectionEmpty(customer, customerError, "Select a customer")) return;
+
         // Create local time object
         ZonedDateTime startDateTime = ZonedDateTime.of(start.getValue(), startTime.getValue(), ZoneId.systemDefault());
+        LocalDateTime startLtc = startDateTime.withZoneSameInstant(ZoneOffset.UTC).toLocalDateTime(); // Convert to UTC for database
         ZonedDateTime endDateTime = ZonedDateTime.of(end.getValue(), endTime.getValue(), ZoneId.systemDefault());
+        LocalDateTime endLtc = endDateTime.withZoneSameInstant(ZoneOffset.UTC).toLocalDateTime(); // Convert to UTC for database
 
         // Check that start time is before end time
-        if(startDateTime.isAfter(endDateTime)) {
-            businessHours.setText("Start and end time must fall within business hours, 8AM - 10PM Monday - Friday EST");
-            return;
-        }
-        // Check if date / time are in business hours
-        if (!Time.inBusinessHours(startDateTime, endDateTime)){
-            businessHours.setText("Start and end time must fall within business hours, 8AM - 10PM Monday - Friday EST");
+        if(startDateTime.isAfter(endDateTime) || startDateTime.equals(endDateTime)) {
+            dateTimeError.setText("Start time/date must occur before end time/date");
             return;
         }
 
+        // Check if date / time are in business hours
+        if (!Time.inBusinessHours(startDateTime, endDateTime)){
+            dateTimeError.setText("Start and end time must fall within business hours, 8AM - 10PM Monday - Friday EST");
+            return;
+        }
+
+        // Check for overlapping appointment times
+        ObservableList<Appointment> customerTimes = DBAppointments.getCustomerAppointments(customer.getValue().getId());
+        for (Appointment appt : customerTimes) {
+
+                // Check if start and end times conflict with any other appointments
+                if ((appt.getStart().isAfter(startLtc) && appt.getStart().isBefore(endLtc)) || appt.getEnd().isAfter(startLtc) && appt.getEnd().isBefore(endLtc)){
+                    dateTimeError.setText("Appointment time conflicts with another appointment (" + Time.ToTimeString(Time.utcToLocalTime(appt.getStart())) + " - " + Time.ToTimeString(Time.utcToLocalTime(appt.getEnd())) + ")");
+                    return;
+                }
+
+        }
 
 
         // Insert form data into database
@@ -165,10 +176,10 @@ public class AppointmentAddController implements Initializable {
             DBAppointments.getNewAppointmentId(),
             title.getText(),
             description.getText(),
-            location.getText(),
-            type.getText(),
-            startDateTime.withZoneSameInstant(ZoneOffset.UTC).toLocalDateTime(), // Convert to UTC for database
-            endDateTime.withZoneSameInstant(ZoneOffset.UTC).toLocalDateTime(),  // Convert to UTC for database
+            location.getValue(),
+            type.getValue(),
+            startLtc, // Convert to UTC for database
+            endLtc,  // Convert to UTC for database
             customer.getValue().getId(),
             2, //TODO input USER ID
             contact.getValue().getId());

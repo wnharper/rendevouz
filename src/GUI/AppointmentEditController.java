@@ -20,47 +20,36 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.stage.Stage;
-import javafx.util.Callback;
 
 import java.io.IOException;
 import java.net.URL;
 import java.time.*;
-import java.time.format.DateTimeFormatter;
 import java.util.Optional;
 import java.util.ResourceBundle;
 
 public class AppointmentEditController implements Initializable {
 
     // Form fields
-    @FXML private Button save;
-
-    @FXML private Button cancel;
-
     @FXML private TextField title;
-
     @FXML private TextField description;
-
-    @FXML private TextField location;
-
+    @FXML private ComboBox<String> location;
     @FXML private ComboBox<Contact> contact;
-
-    @FXML private TextField type;
-
+    @FXML private ComboBox<String> type;
     @FXML private DatePicker start;
-
     @FXML private DatePicker end;
-
     @FXML private ComboBox<Customer> customer;
-
-    @FXML private Button customers_nav;
-
     @FXML private Spinner<LocalTime> startTime;
-
     @FXML private Spinner<LocalTime> endTime;
 
-    @FXML private Label businessHours;
-
-
+    // Form error labels
+    @FXML private Label dateTimeError;
+    @FXML private Label dateTimeEndError;
+    @FXML private Label titleError;
+    @FXML private Label descriptionError;
+    @FXML private Label locationError;
+    @FXML private Label contactError;
+    @FXML private Label typeError;
+    @FXML private Label customerError;
 
     // Contact and Customer lists for combo boxes
     private ObservableList<Contact> contactsList = FXCollections.observableArrayList();
@@ -73,7 +62,11 @@ public class AppointmentEditController implements Initializable {
     // Initialize method, required in order for the UI/Scene to launch and function
     @Override
     public void initialize (URL url, ResourceBundle rb) {
+        // Populate appointment locations combo box
+        location.getItems().addAll(Appointment.locations());
 
+        // Populate appointment types combo box
+        type.getItems().addAll(Appointment.appointmentTypes());
 
         // Populate contacts combo box
         contactsList.addAll(DBContacts.getAllContacts());
@@ -122,6 +115,14 @@ public class AppointmentEditController implements Initializable {
     public void saveAppointment(ActionEvent event) throws IOException
     {
 
+         /*
+        Form validation
+         */
+        if (Alerts.isFieldEmpty(title, titleError, "Enter a title")) return;
+        if (Alerts.isFieldEmpty(description, descriptionError, "Enter a description")) return;
+        if (Alerts.isSelectionEmpty(location, locationError, "Enter a location")) return;
+        //if (Alerts.isFieldEmpty(type, typeError, "Enter an appointment type")) return;
+
         // Create local time object
         ZonedDateTime startDateTime = ZonedDateTime.of(start.getValue(), startTime.getValue(), ZoneId.systemDefault());
         LocalDateTime startLtc = startDateTime.withZoneSameInstant(ZoneOffset.UTC).toLocalDateTime(); // Convert to UTC for database
@@ -129,13 +130,13 @@ public class AppointmentEditController implements Initializable {
         LocalDateTime endLtc = endDateTime.withZoneSameInstant(ZoneOffset.UTC).toLocalDateTime(); // Convert to UTC for database
 
         // Check that start time is before end time
-        if(startDateTime.isAfter(endDateTime)) {
-            businessHours.setText("Start time/date must occur before end time/date");
+        if(startDateTime.isAfter(endDateTime) || startDateTime.equals(endDateTime)) {
+            dateTimeError.setText("Start time/date must occur before end time/date");
             return;
         }
         // Check if date / time are in business hours
         if (!Time.inBusinessHours(startDateTime, endDateTime)){
-            businessHours.setText("Start and end time must fall within business hours, 8AM - 10PM Monday - Friday EST");
+            dateTimeError.setText("Start and end time must fall within business hours, 8AM - 10PM Monday - Friday EST");
             return;
         }
 
@@ -146,7 +147,7 @@ public class AppointmentEditController implements Initializable {
             if (appt.getId() != appointmentId) {
                 // Check if start and end times conflict with any other appointments
                 if ((appt.getStart().isAfter(startLtc) && appt.getStart().isBefore(endLtc)) || appt.getEnd().isAfter(startLtc) && appt.getEnd().isBefore(endLtc)){
-                    businessHours.setText("Appointment time conflicts with another appointment (" + Time.ToTimeString(Time.utcToLocalTime(appt.getStart())) + " - " + Time.ToTimeString(Time.utcToLocalTime(appt.getEnd())) + ")");
+                    dateTimeError.setText("Appointment time conflicts with another appointment (" + Time.ToTimeString(Time.utcToLocalTime(appt.getStart())) + " - " + Time.ToTimeString(Time.utcToLocalTime(appt.getEnd())) + ")");
                     return;
                 }
             }
@@ -157,8 +158,8 @@ public class AppointmentEditController implements Initializable {
                 appointmentId,
                 title.getText(),
                 description.getText(),
-                location.getText(),
-                type.getText(),
+                location.getValue(),
+                type.getValue(),
                 startLtc,
                 endLtc,
                 customer.getValue().getId(),
@@ -183,8 +184,8 @@ public class AppointmentEditController implements Initializable {
         // Extract data from customer object
         title.setText(appointment.getTitle());
         description.setText(appointment.getDescription());
-        location.setText(appointment.getLocation());
-        type.setText(appointment.getType());
+        location.getSelectionModel().select(appointment.getLocation()); //TODO
+        type.getSelectionModel().select(appointment.getType()); //TODO
         start.setValue(appointment.getStart().toLocalDate());
         startTime.getValueFactory().setValue(appointment.getStart().toLocalTime());
         end.setValue(appointment.getEnd().toLocalDate());

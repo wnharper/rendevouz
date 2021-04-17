@@ -29,17 +29,24 @@
                     <children>
                         <TextField fx:id="title" prefHeight="34.0" prefWidth="300.0" promptText="Title" />
                         <TextField fx:id="description" prefHeight="34.0" prefWidth="300.0" promptText="Description" />
-                        <TextField fx:id="location" prefHeight="34.0" prefWidth="300.0" promptText="Location" />
+                  <ComboBox fx:id="location" prefWidth="300.0" promptText="Location" />
+                  <ComboBox fx:id="type" prefWidth="300.0" promptText="Type" />
                         <ComboBox fx:id="contact" prefWidth="300.0" promptText="Contact" />
-                        <TextField fx:id="type" prefHeight="34.0" prefWidth="300.0" promptText="Type" />
                         <DatePicker fx:id="start" prefWidth="300.0" promptText="Start" />
                         <DatePicker fx:id="end" prefWidth="300.0" promptText="End" />
                         <ComboBox fx:id="customer" prefWidth="300.0" promptText="Customer" />
                     </children>
                 </VBox>
-                <Spinner fx:id="startTime" layoutX="345.0" layoutY="321.0" />
-                <Spinner fx:id="endTime" layoutX="344.0" layoutY="388.0" />
-            <Label fx:id="businessHours" layoutX="539.0" layoutY="310.0" prefHeight="47.0" prefWidth="310.0" styleClass="label-error" wrapText="true" />
+                <Spinner fx:id="startTime" layoutX="345.0" layoutY="337.0" />
+                <Spinner fx:id="endTime" layoutX="344.0" layoutY="404.0" />
+            <Label fx:id="dateTimeError" alignment="TOP_LEFT" layoutX="539.0" layoutY="354.0" prefHeight="47.0" prefWidth="310.0" styleClass="label-error" wrapText="true" />
+            <Label fx:id="titleError" layoutX="359.0" layoutY="47.0" styleClass="label-error" />
+            <Label fx:id="descriptionError" layoutX="359.0" layoutY="101.0" styleClass="label-error" />
+            <Label fx:id="locationError" layoutX="359.0" layoutY="164.0" styleClass="label-error" />
+            <Label fx:id="typeError" layoutX="359.0" layoutY="226.0" styleClass="label-error" />
+            <Label fx:id="contactError" layoutX="359.0" layoutY="287.0" styleClass="label-error" />
+            <Label fx:id="customerError" layoutX="359.0" layoutY="484.0" styleClass="label-error" />
+            <Label fx:id="dateTimeEndError" layoutX="539.0" layoutY="422.0" styleClass="label-error" />
             </children>
         </AnchorPane>
         <AnchorPane layoutX="-5.0" prefHeight="112.0" prefWidth="175.0" style="-fx-background-color: E74061;">
@@ -54,8 +61,6 @@
         <Label layoutX="184.0" layoutY="76.0" styleClass="card-title" text="Edit Appointment" />
         <AnchorPane layoutX="-5.0" layoutY="112.0" prefHeight="688.0" prefWidth="175.0" style="-fx-background-color: #28004D;">
             <children>
-                <Button fx:id="customers_nav" cancelButton="true" layoutX="42.0" layoutY="56.0" mnemonicParsing="false" styleClass="button-nav" text="Customers" />
-                <Button cancelButton="true" layoutX="43.0" layoutY="136.0" mnemonicParsing="false" styleClass="button-nav" text="Reports" />
                 <ImageView fitHeight="17.0" fitWidth="11.0" layoutX="32.0" layoutY="70.0" pickOnBounds="true" preserveRatio="true">
                     <image>
                         <Image url="@customers.png" />
@@ -73,6 +78,8 @@
                 </ImageView>
                 <AnchorPane layoutX="5.0" layoutY="103.0" prefHeight="25.0" prefWidth="2.0" style="-fx-background-color: E74061;" />
                 <Label layoutX="52.0" layoutY="107.0" styleClass="label-nav-active" text="Appointments" />
+            <Label layoutX="52.0" layoutY="146.0" styleClass="label-nav-inactive" text="Reports" />
+            <Label layoutX="53.0" layoutY="68.0" styleClass="label-nav-inactive" text="Customers" />
             </children>
         </AnchorPane>
     </children>

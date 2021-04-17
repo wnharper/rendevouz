@@ -463,6 +463,10 @@
     -fx-text-fill: -swatch-100;
 }
 
+.label-nav-inactive {
+    -fx-text-fill: white;
+}
+
 .label-help-tip {
     -fx-text-fill: -swatch-300;
     -fx-font-size: 12;

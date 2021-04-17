@@ -34,17 +34,17 @@
             <Label layoutX="723.0" layoutY="10.0" styleClass="label-help-tip" text="Click + icon to view more columns" />
             </children>
         </AnchorPane>
-        <Button fx:id="add" defaultButton="true" layoutX="923.0" layoutY="59.0" mnemonicParsing="false" onAction="#createAppointment" styleClass="button-raised" text="CREATE APPOINTMENT">
+        <Button defaultButton="true" layoutX="923.0" layoutY="59.0" mnemonicParsing="false" onAction="#createAppointment" styleClass="button-raised" text="CREATE APPOINTMENT">
             <padding>
                 <Insets top="4.0" />
             </padding>
         </Button>
         <Button cancelButton="true" layoutX="785.0" layoutY="59.0" mnemonicParsing="false" onAction="#deleteAppointment" styleClass="button-raised" text="DELETE" />
-        <TextField fx:id="search" layoutX="184.0" layoutY="59.0" prefHeight="40.0" prefWidth="279.0" promptText="Search Title &amp; Description" />
+        <TextField fx:id="search" layoutX="184.0" layoutY="59.0" prefHeight="40.0" prefWidth="279.0" promptText="Search Appointments" />
         <AnchorPane layoutX="-5.0" layoutY="112.0" prefHeight="688.0" prefWidth="175.0" style="-fx-background-color: #28004D;">
             <children>
                 <Button fx:id="customers_nav" cancelButton="true" layoutX="42.0" layoutY="56.0" mnemonicParsing="false" onAction="#customers" styleClass="button-nav" text="Customers" />
-                <Button cancelButton="true" layoutX="43.0" layoutY="136.0" mnemonicParsing="false" styleClass="button-nav" text="Reports" />
+                <Button cancelButton="true" layoutX="43.0" layoutY="136.0" mnemonicParsing="false" onAction="#reports" styleClass="button-nav" text="Reports" />
                 <ImageView fitHeight="17.0" fitWidth="11.0" layoutX="32.0" layoutY="70.0" pickOnBounds="true" preserveRatio="true">
                     <image>
                         <Image url="@customers.png" />

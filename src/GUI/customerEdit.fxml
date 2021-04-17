@@ -33,12 +33,16 @@
                         <TextField fx:id="phone" prefHeight="34.0" prefWidth="300.0" promptText="Phone" />
                     </children>
                 </VBox>
+            <Label fx:id="nameError" layoutX="358.0" layoutY="50.0" styleClass="label-error" />
+            <Label fx:id="addressError" layoutX="358.0" layoutY="104.0" styleClass="label-error" />
+            <Label fx:id="zipError" layoutX="358.0" layoutY="157.0" styleClass="label-error" />
+            <Label fx:id="countryError" layoutX="358.0" layoutY="219.0" styleClass="label-error" />
+            <Label fx:id="stateError" layoutX="358.0" layoutY="282.0" styleClass="label-error" />
+            <Label fx:id="phoneError" layoutX="358.0" layoutY="335.0" styleClass="label-error" />
             </children>
         </AnchorPane>
         <AnchorPane layoutX="-5.0" layoutY="112.0" prefHeight="688.0" prefWidth="175.0" style="-fx-background-color: #28004D;">
             <children>
-                <Button cancelButton="true" layoutX="43.0" layoutY="96.0" mnemonicParsing="false" styleClass="button-nav" text="Appointments" />
-                <Button cancelButton="true" layoutX="43.0" layoutY="136.0" mnemonicParsing="false" styleClass="button-nav" text="Reports" />
                 <ImageView fitHeight="17.0" fitWidth="11.0" layoutX="32.0" layoutY="70.0" pickOnBounds="true" preserveRatio="true">
                     <image>
                         <Image url="@customers_active.png" />
@@ -56,6 +60,8 @@
                 </ImageView>
                 <AnchorPane layoutX="5.0" layoutY="63.0" prefHeight="25.0" prefWidth="2.0" style="-fx-background-color: E74061;" />
                 <Label layoutX="54.0" layoutY="68.0" styleClass="label-nav-active" text="Customers" />
+            <Label layoutX="54.0" layoutY="147.0" styleClass="label-nav-inactive" text="Reports" />
+            <Label layoutX="54.0" layoutY="107.0" styleClass="label-nav-inactive" text="Appointments" />
             </children>
         </AnchorPane>
         <AnchorPane layoutX="-5.0" prefHeight="112.0" prefWidth="175.0" style="-fx-background-color: E74061;">

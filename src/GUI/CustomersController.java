@@ -87,13 +87,19 @@ public class CustomersController implements Initializable {
                     return true;
                 }
 
-                // compare customer name and id with all customers in list
+                // compare customer attributes with all customers in list
                 String lowerCaseFilter = newValue.toLowerCase();
 
                 if (customer.getName().toLowerCase().contains(lowerCaseFilter)) {
                     return true; // filter matches customer name
                 } else if (Integer.toString(customer.getId()).toLowerCase().contains(lowerCaseFilter)) {
                     return true; // filter matches id
+                } else if (customer.getAddress().toLowerCase().contains(lowerCaseFilter)) {
+                    return true; // filter matches address
+                } else if (customer.getCountry().toLowerCase().contains(lowerCaseFilter)) {
+                    return true; // filter matches country
+                } else if (customer.getState().toLowerCase().contains(lowerCaseFilter)) {
+                    return true; // filter matches state
                 }
                 else
                     return false; // no match found
@@ -113,11 +119,23 @@ public class CustomersController implements Initializable {
     }
 
     /**
-     * This method switches to the Add Customer scene
+     * This method switches to the appointments scene
      */
     public void appointments(ActionEvent event) throws IOException
     {
         Parent sceneParent = FXMLLoader.load(getClass().getResource("appointments.fxml"));
+        Scene scene = new Scene(sceneParent);
+        Stage window = (Stage)((Node)event.getSource()).getScene().getWindow();
+        window.setScene(scene);
+        window.show();
+    }
+
+    /**
+     * This method switches to the reports scene
+     */
+    public void reports(ActionEvent event) throws IOException
+    {
+        Parent sceneParent = FXMLLoader.load(getClass().getResource("reports.fxml"));
         Scene scene = new Scene(sceneParent);
         Stage window = (Stage)((Node)event.getSource()).getScene().getWindow();
         window.setScene(scene);

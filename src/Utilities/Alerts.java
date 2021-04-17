@@ -1,6 +1,6 @@
 package Utilities;
 
-import javafx.scene.control.Alert;
+import javafx.scene.control.*;
 
 public class Alerts {
 
@@ -34,6 +34,11 @@ public class Alerts {
         return alert;
     }
 
+    /**
+     * Method creates a error message dialog box
+     * @param error The type of error
+     * @param suggestion How to fix the error
+     */
     public static void errorBox(String error, String suggestion) {
 
         /* Create alert dialog box */
@@ -43,4 +48,63 @@ public class Alerts {
         alert1.setContentText(suggestion);
         alert1.showAndWait();
     }
+
+    /**
+     * Method displays error message if there is no user input
+     * @param field      field to be checked
+     * @param errorLabel label to display message
+     * @param error      error message to be displayed
+     * @return true if field is empty
+     */
+    public static boolean isFieldEmpty(TextField field, Label errorLabel, String error) {
+        if (field.getText().length() == 0) {
+            field.setStyle("-fx-border-color: red; -fx-border-width: 0 0 2 0;");
+            errorLabel.setText(error);
+            return true;
+        } else {
+            field.setStyle(null);
+            errorLabel.setText("");
+            return false;
+        }
+    }
+
+    /**
+     * Method displays an error message if user has not made a selection
+     * @param comboBox
+     * @param errorLabel
+     * @param error
+     * @return
+     */
+    public static boolean isSelectionEmpty(ComboBox comboBox, Label errorLabel, String error) {
+        if (comboBox.getSelectionModel().isEmpty()) {
+            comboBox.setStyle("-fx-border-color: red; -fx-border-width: 0 0 2 0;");
+            errorLabel.setText(error);
+            return true;
+        } else {
+            comboBox.setStyle(null);
+            errorLabel.setText("");
+            return false;
+        }
+    }
+
+    /**
+     * Method displays an error if user has not selected a date
+     * @param datePicker
+     * @param errorLabel
+     * @param error
+     * @return
+     */
+    public static boolean isDateSelected(DatePicker datePicker, Label errorLabel, String error) {
+        if (datePicker.getValue() == null) {
+            datePicker.setStyle("-fx-border-color: red; -fx-border-width: 0 0 2 0;");
+            errorLabel.setText(error);
+            return true;
+        } else {
+            datePicker.setStyle(null);
+            errorLabel.setText("");
+            return false;
+        }
+    }
+
+
 }

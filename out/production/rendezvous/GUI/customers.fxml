@@ -18,7 +18,7 @@
          <children>
             <TableView fx:id="customerTable" editable="true" layoutX="28.0" layoutY="26.0" prefHeight="627.0" prefWidth="874.0" tableMenuButtonVisible="true">
                <columns>
-                  <TableColumn fx:id="id" prefWidth="50.0" text="ID" />
+                  <TableColumn fx:id="id" prefWidth="50.0" text="ID" visible="false" />
                   <TableColumn fx:id="name" minWidth="0.0" prefWidth="250.0" text="Name" />
                   <TableColumn fx:id="address" minWidth="0.0" prefWidth="316.0" text="Address" />
                   <TableColumn fx:id="country" minWidth="0.0" prefWidth="130.0" text="Country" />
@@ -38,7 +38,7 @@
          <children>
             <Button cancelButton="true" layoutX="43.0" layoutY="56.0" mnemonicParsing="false" styleClass="button-nav-focused" text="Customers" />
             <Button fx:id="appointments_nav" cancelButton="true" layoutX="43.0" layoutY="96.0" mnemonicParsing="false" onAction="#appointments" styleClass="button-nav" text="Appointments" />
-            <Button cancelButton="true" layoutX="43.0" layoutY="136.0" mnemonicParsing="false" styleClass="button-nav" text="Reports" />
+            <Button cancelButton="true" layoutX="43.0" layoutY="136.0" mnemonicParsing="false" onAction="#reports" styleClass="button-nav" text="Reports" />
             <ImageView fitHeight="17.0" fitWidth="11.0" layoutX="32.0" layoutY="70.0" pickOnBounds="true" preserveRatio="true">
                <image>
                   <Image url="@customers_active.png" />

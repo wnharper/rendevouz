@@ -1,5 +1,8 @@
 package Model;
 
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
+
 import java.time.LocalDateTime;
 
 public class Appointment {
@@ -40,6 +43,33 @@ public class Appointment {
         this.customerId = customerId;
     }
 
+    /**
+     * Method returns an array of appointment types for use in appointment creation
+     * @return String Array
+     */
+    public static String[] appointmentTypes() {
+
+        String[] types = {
+                "General",
+                "Introduction",
+                "Consultation"};
+        return types;
+    }
+
+    /**
+     * Method returns an array of appointment types for use in appointment creation
+     * @return String Array
+     */
+    public static String[] locations() {
+
+        String[] types = {
+                "Phoenix",
+                "White Plains",
+                "Montreal",
+                "London"};
+        return types;
+    }
+
     public int getId() { return id; }
 
     public void setId(int id) {
@@ -76,9 +106,7 @@ public class Appointment {
 
     public void setContact(String contact) { this.contact = contact; }
 
-    public String getType() {
-        return type;
-    }
+    public String getType() { return type; }
 
     public void setType(String type) {
         this.type = type;

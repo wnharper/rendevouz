@@ -4,6 +4,7 @@ import DBAccess.DBCountries;
 import DBAccess.DBCustomer;
 import DBAccess.DBStates;
 import Model.Customer;
+import Utilities.Alerts;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -12,10 +13,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Alert;
-import javafx.scene.control.ButtonType;
-import javafx.scene.control.ComboBox;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.stage.Stage;
 
 import java.io.IOException;
@@ -34,6 +32,12 @@ public class CustomerEditController implements Initializable {
     @FXML private ComboBox<String> country;
     @FXML private ComboBox<String> state;
     @FXML private TextField phone;
+    @FXML private Label nameError;
+    @FXML private Label addressError;
+    @FXML private Label zipError;
+    @FXML private Label countryError;
+    @FXML private Label stateError;
+    @FXML private Label phoneError;
 
     // Initialize method, required in order for the UI/Scene to launch and function
     @Override
@@ -111,6 +115,15 @@ public class CustomerEditController implements Initializable {
      */
     public void save(ActionEvent event) throws IOException
     {
+            /*
+        Form validation
+         */
+        if (Alerts.isFieldEmpty(name, nameError, "Enter a name")) return;
+        if (Alerts.isFieldEmpty(address, addressError, "Enter an address")) return;
+        if (Alerts.isFieldEmpty(postcode, zipError, "Enter a post / zip code")) return;
+        if (Alerts.isSelectionEmpty(country, countryError, "Select a country")) return;
+        if (Alerts.isSelectionEmpty(state, stateError, "Select a state")) return;
+        if (Alerts.isFieldEmpty(phone, phoneError, "Enter a phone number")) return;
 
         // Insert form data into database
         DBCustomer.updateCustomer(customerId, name.getText(), address.getText(), postcode.getText(), phone.getText(), DBStates.getStateId(state.getValue()));
