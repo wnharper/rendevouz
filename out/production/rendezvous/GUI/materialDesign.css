@@ -255,6 +255,32 @@
 
 /*******************************************************************************
  *                                                                             *
+ * Charts                                                                      *
+ *                                                                             *
+ ******************************************************************************/
+.chart-bar {
+    /*-fx-background-color: #E74061;*/
+}
+
+.data0.chart-bar, .data4.chart-bar, .data8.chart-bar {
+    -fx-background-color: -swatch-400;
+}
+
+.data1.chart-bar, .data5.chart-bar, .data9.chart-bar {
+    -fx-background-color: -swatch-300;
+}
+
+.data2.chart-bar, .data6.chart-bar, .data10.chart-bar {
+    -fx-background-color: -swatch-200;
+}
+
+.data3.chart-bar, .data7.chart-bar, .data11.chart-bar {
+    -fx-background-color: -swatch-500;
+}
+
+
+/*******************************************************************************
+ *                                                                             *
  * CheckBox                                                                    *
  *                                                                             *
  ******************************************************************************/

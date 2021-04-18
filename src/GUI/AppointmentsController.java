@@ -45,6 +45,7 @@ public class AppointmentsController implements Initializable {
 
     @FXML private Toggle week;
     @FXML private Toggle month;
+    @FXML private Toggle all;
     @FXML private ToggleGroup timeSelect;
 
     private ObservableList<Appointment> appointments = FXCollections.observableArrayList();
@@ -66,7 +67,7 @@ public class AppointmentsController implements Initializable {
         end.setCellValueFactory(new PropertyValueFactory<Appointment, LocalDateTime>("end"));
         customer.setCellValueFactory(new PropertyValueFactory<Appointment, String>("customer"));
 
-        appointments.addAll(DBAppointments.getMonthAppointments());
+        appointments.addAll(DBAppointments.getAllAppointments());
         appTable.setItems(appointments);
 
         // Date time formatter for start/end columns
@@ -108,6 +109,7 @@ public class AppointmentsController implements Initializable {
         timeSelect = new ToggleGroup();
         this.week.setToggleGroup(timeSelect);
         this.month.setToggleGroup(timeSelect);
+        this.all.setToggleGroup(timeSelect);
 
 
         /*
@@ -169,8 +171,16 @@ public class AppointmentsController implements Initializable {
         // Filter appointments occurring in the next month
         month.selectedProperty().addListener(((obs, wasPreviouslySelected, isNowSelected) -> {
             if (isNowSelected) {
-                Predicate<Appointment> weekPred = i -> i.getStart().getMonth() == dateTime.getMonth();
-                filteredAppointments.setPredicate(weekPred);
+                Predicate<Appointment> predicate = i -> i.getStart().getMonth() == dateTime.getMonth();
+                filteredAppointments.setPredicate(predicate);
+            }
+        }));
+
+        // Show all appointments
+        all.selectedProperty().addListener(((obs, wasPreviouslySelected, isNowSelected) -> {
+            if (isNowSelected) {
+                Predicate<Appointment> predicate = i -> i.getId() >= 0;
+                filteredAppointments.setPredicate(predicate);
             }
         }));
 

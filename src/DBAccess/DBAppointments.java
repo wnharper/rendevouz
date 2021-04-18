@@ -5,6 +5,7 @@ import Model.Appointment;
 import Utilities.Time;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.scene.chart.XYChart;
 
 import java.sql.*;
 import java.time.LocalDateTime;
@@ -13,9 +14,10 @@ public class DBAppointments {
 
     /**
      * Method returns a list of all appointments occuring in the next month
+     *
      * @return Observable List
      */
-    public static ObservableList<Appointment> getMonthAppointments() {
+    public static ObservableList<Appointment> getAllAppointments() {
         ObservableList<Appointment> appointmentsList = FXCollections.observableArrayList();
 
         try {
@@ -41,7 +43,7 @@ public class DBAppointments {
                 String customerName = resultSet.getString("Customer_Name");
                 int customerId = resultSet.getInt("Customer_ID");
                 int days = resultSet.getInt("Days");
-                Appointment appointment = new Appointment(appId,title, description, location, contact, contactId, type, start, end, customerName, customerId, days);
+                Appointment appointment = new Appointment(appId, title, description, location, contact, contactId, type, start, end, customerName, customerId, days);
 
                 appointmentsList.add(appointment);
             }
@@ -53,6 +55,7 @@ public class DBAppointments {
 
     /**
      * Method takes appointment attributes and inserts them into appointments table in database
+     *
      * @param appointmentId
      * @param title
      * @param description
@@ -80,6 +83,7 @@ public class DBAppointments {
 
     /**
      * Method takes appointment attributes and updates the appointment (via Id) in the database
+     *
      * @param appointmentId
      * @param title
      * @param description
@@ -108,6 +112,7 @@ public class DBAppointments {
     /**
      * Method returns a new appointments ID by retrieving the last appointment ID in the
      * appointments table and adding 1.
+     *
      * @return new customer ID int
      */
     public static int getNewAppointmentId() {
@@ -134,6 +139,7 @@ public class DBAppointments {
 
     /**
      * Method takes deletes appointment in database according to appointment ID
+     *
      * @param appointmentId
      */
     public static void deleteAppointment(int appointmentId) {
@@ -153,6 +159,7 @@ public class DBAppointments {
 
     /**
      * Method returns a list of all appointments occuring in the next month
+     *
      * @return Observable List
      */
     public static ObservableList<Appointment> getCustomerAppointments(int customer_id) {
@@ -178,5 +185,79 @@ public class DBAppointments {
             throwables.printStackTrace();
         }
         return appointmentsList;
+    }
+
+    /**
+     * Method returns Chart list of data from Database containing number of appointments
+     * categorized by month
+     *
+     * @return Appointments by month count
+     */
+    public static XYChart.Series appointmentCountData() {
+
+        // Initialize chart
+        XYChart.Series chartData = new XYChart.Series();
+        try {
+            String sqlQuery = "SELECT DATE_FORMAT(start, '%M') AS Month, COUNT(*) AS 'Count' FROM appointments GROUP BY DATE_FORMAT(start, '%M') ORDER BY\n" +
+                    "FIELD(Month,\n" +
+                    "    'January',\n" +
+                    "    'February',\n" +
+                    "    'March',\n" +
+                    "    'April',\n" +
+                    "    'May',\n" +
+                    "    'June',\n" +
+                    "    'July',\n" +
+                    "    'August',\n" +
+                    "    'September',\n" +
+                    "    'October',\n" +
+                    "    'November',\n" +
+                    "    'December'\n" +
+                    ");";
+
+            PreparedStatement pStatement = DBConnection.getDbConnection().prepareStatement(sqlQuery);
+
+            ResultSet resultSet = pStatement.executeQuery();
+
+            while (resultSet.next()) {
+
+                String month = resultSet.getString("Month");
+                int count = resultSet.getInt("Count");
+                chartData.getData().add(new XYChart.Data(month, count));
+
+            }
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+        return chartData;
+    }
+
+    /**
+     * Method returns Chart list of data from Database containing number of appointments
+     * categorized by type
+     *
+     * @return Appointment count by type
+     */
+    public static XYChart.Series appointmentTypeData() {
+
+        // Initialize chart
+        XYChart.Series chartData = new XYChart.Series();
+        try {
+            String sqlQuery = "SELECT Type, COUNT(*) AS 'Count' FROM appointments GROUP BY Type;";
+
+            PreparedStatement pStatement = DBConnection.getDbConnection().prepareStatement(sqlQuery);
+
+            ResultSet resultSet = pStatement.executeQuery();
+
+            while (resultSet.next()) {
+
+                String type = resultSet.getString("Type");
+                int count = resultSet.getInt("Count");
+                chartData.getData().add(new XYChart.Data(type, count));
+
+            }
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+        return chartData;
     }
 }
