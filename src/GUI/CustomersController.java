@@ -111,7 +111,7 @@ public class CustomersController implements Initializable {
         // Bind the SortedList comparator to the customers table comparator
         sortedData.comparatorProperty().bind(customerTable.comparatorProperty());
 
-        // Load sorted and filtered data into parts table
+        // Load sorted and filtered data into customer table
         customerTable.setItems(sortedData);
 
         // Set focus to search box

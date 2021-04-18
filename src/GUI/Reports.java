@@ -1,11 +1,15 @@
 package GUI;
 
 import DBAccess.DBAppointments;
+import DBAccess.DBContacts;
 import Model.Appointment;
+import Model.Contact;
+import Model.Customer;
 import Utilities.Time;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
+import javafx.collections.transformation.SortedList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -30,6 +34,7 @@ import java.util.function.Predicate;
 public class Reports implements Initializable {
 
     // Appointments table
+    @FXML private ComboBox<Contact> contacts;
     @FXML private TableView<Appointment> appTable;
     @FXML private TableColumn<Appointment, Integer> id;
     @FXML private TableColumn<Appointment, String> title;
@@ -78,6 +83,8 @@ public class Reports implements Initializable {
         customer.setCellValueFactory(new PropertyValueFactory<Appointment, String>("customer"));
 
         appointments.addAll(DBAppointments.getAllAppointments());
+        // Wrap the ObservableList appointments in a FilteredList
+        filteredAppointments = new FilteredList<>(appointments, b -> true);
         appTable.setItems(appointments);
 
         // Date time formatter for start/end columns
@@ -115,34 +122,37 @@ public class Reports implements Initializable {
             };
         });
 
-        // Initialize Radio buttons
-        timeSelect = new ToggleGroup();
-        this.week.setToggleGroup(timeSelect);
-        this.month.setToggleGroup(timeSelect);
+        // Populate contacts combo box
+        contacts.getItems().addAll(DBContacts.getAllContacts());
 
 
-        LocalDateTime dateTime = LocalDateTime.now();
-        /*
-         * Radio button functionality
-         */
-        // Filter appointments occurring in the next 7 days
-        week.selectedProperty().addListener(((obs, wasPreviouslySelected, isNowSelected) -> {
-            if (isNowSelected) {
-                Predicate<Appointment> predicate = i -> Time.getWeekOfYear(i.getStart()) == Time.getWeekOfYear(dateTime);
-                filteredAppointments.setPredicate(predicate);
-            }
-        }));
+        // Set the filter Predicate whenever the filter changes
+        contacts.valueProperty().addListener((observable, oldValue, newValue) -> {
+            filteredAppointments.setPredicate(appointment -> {
 
-        // Filter appointments occurring in the next month
-        month.selectedProperty().addListener(((obs, wasPreviouslySelected, isNowSelected) -> {
-            if (isNowSelected) {
-                Predicate<Appointment> weekPred = i -> i.getStart().getMonth() == dateTime.getMonth();
-                filteredAppointments.setPredicate(weekPred);
-            }
-        }));
+                // If the search box is empty, display all customers
+                if (newValue == null) {
+                    return true;
+                }
 
-        // Select week toggle filter
-        timeSelect.selectToggle(this.week);
+                // compare customer attributes with all customers in list
+                int contactId = newValue.getId();
+
+                if (appointment.getContactId() == contactId) {
+                    return true; // filter matches customer name
+                }
+                else
+                    return false; // no match found
+            });
+        });
+        // Wrap the FilteredList in a SortedList.
+        SortedList<Appointment> sortedData = new SortedList<>(filteredAppointments);
+
+        // Bind the SortedList comparator to the appointments table comparator
+        sortedData.comparatorProperty().bind(appTable.comparatorProperty());
+
+        // Load sorted and filtered data into appointments table
+        appTable.setItems(sortedData);
 
         // Sort table by appointment start date/time
         appTable.getSortOrder().setAll(start);
