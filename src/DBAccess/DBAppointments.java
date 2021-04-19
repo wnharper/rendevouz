@@ -1,6 +1,7 @@
 package DBAccess;
 
 import Database.DBConnection;
+import GUI.Login;
 import Model.Appointment;
 import Utilities.Time;
 import javafx.collections.FXCollections;
@@ -96,8 +97,8 @@ public class DBAppointments {
 
         try {
             String sqlQuery = "UPDATE appointments SET Title ='" + title + "', Description='" + description + "', Location ='"
-                    + location + "', Type = '" + type + "', Start = '" + start + "', End = '" + end + "', Last_Updated_By = 'TODO' , Customer_ID = "
-                    + customerId + ", User_ID = " + userId + ", Contact_ID = " + contactId + " WHERE Appointment_ID = " + appointmentId + ";"; // TODO user id
+                    + location + "', Type = '" + type + "', Start = '" + start + "', End = '" + end + "', Last_Updated_By = '" + Login.currentUser.getUserId() + "' , Customer_ID = "
+                    + customerId + ", User_ID = " + userId + ", Contact_ID = " + contactId + " WHERE Appointment_ID = " + appointmentId + ";";
 
             Statement statement = DBConnection.getDbConnection().createStatement();
             statement.execute(sqlQuery);
@@ -253,6 +254,36 @@ public class DBAppointments {
                 String type = resultSet.getString("Type");
                 int count = resultSet.getInt("Count");
                 chartData.getData().add(new XYChart.Data(type, count));
+
+            }
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+        return chartData;
+    }
+
+    /**
+     * Method returns Chart list of data from Database containing average length of appointment
+     * in minutes grouped my location
+     *
+     * @return Appointment count by type
+     */
+    public static XYChart.Series appointmentLengthData() {
+
+        // Initialize chart
+        XYChart.Series chartData = new XYChart.Series();
+        try {
+            String sqlQuery = "SELECT Location, AVG(timestampdiff(MINUTE, Start, End)) AS 'Average_time' FROM appointments GROUP BY Location;";
+
+            PreparedStatement pStatement = DBConnection.getDbConnection().prepareStatement(sqlQuery);
+
+            ResultSet resultSet = pStatement.executeQuery();
+
+            while (resultSet.next()) {
+
+                String location = resultSet.getString("Location");
+                int time = resultSet.getInt("Average_time");
+                chartData.getData().add(new XYChart.Data(location, time));
 
             }
         } catch (SQLException throwables) {

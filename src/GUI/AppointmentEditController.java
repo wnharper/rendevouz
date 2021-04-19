@@ -163,7 +163,7 @@ public class AppointmentEditController implements Initializable {
                 startLtc,
                 endLtc,
                 customer.getValue().getId(),
-                2, //TODO input USER ID
+                Login.currentUser.getUserId(),
                 contact.getValue().getId());
 
         // Load scene
@@ -184,8 +184,8 @@ public class AppointmentEditController implements Initializable {
         // Extract data from customer object
         title.setText(appointment.getTitle());
         description.setText(appointment.getDescription());
-        location.getSelectionModel().select(appointment.getLocation()); //TODO
-        type.getSelectionModel().select(appointment.getType()); //TODO
+        location.getSelectionModel().select(appointment.getLocation());
+        type.getSelectionModel().select(appointment.getType());
         start.setValue(appointment.getStart().toLocalDate());
         startTime.getValueFactory().setValue(appointment.getStart().toLocalTime());
         end.setValue(appointment.getEnd().toLocalDate());

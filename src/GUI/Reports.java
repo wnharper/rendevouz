@@ -6,6 +6,7 @@ import Model.Appointment;
 import Model.Contact;
 import Model.Customer;
 import Utilities.Time;
+import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
@@ -46,18 +47,19 @@ public class Reports implements Initializable {
     @FXML private TableColumn<Appointment, LocalDateTime> end;
     @FXML private TableColumn<Appointment, String> customer;
 
-    // Appointments Bar Chart
+    // Charts
     @FXML private BarChart<?, ?> monthChart;
     @FXML private CategoryAxis x;
     @FXML private NumberAxis y;
     @FXML private BarChart<?, ?> typeChart;
     @FXML private CategoryAxis x1;
     @FXML private NumberAxis y1;
+    @FXML private BarChart<?, ?> locationChart;
+    @FXML private CategoryAxis x2;
+    @FXML private NumberAxis y2;
 
-    // Toggles
-    @FXML private Toggle week;
-    @FXML private Toggle month;
-    @FXML private ToggleGroup timeSelect;
+    // user section
+    @FXML private Label user;
 
     private ObservableList<Appointment> appointments = FXCollections.observableArrayList();
     private FilteredList<Appointment> filteredAppointments;
@@ -67,9 +69,13 @@ public class Reports implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
 
-        // Appointment count charts
+        // Charts
         monthChart.getData().addAll(DBAppointments.appointmentCountData());
         typeChart.getData().addAll(DBAppointments.appointmentTypeData());
+        locationChart.getData().addAll(DBAppointments.appointmentLengthData());
+
+        // set user name
+        user.setText(Login.currentUser.getUsername());
 
         // Initialize the appointments table
         id.setCellValueFactory(new PropertyValueFactory<Appointment, Integer>("id"));
@@ -156,6 +162,9 @@ public class Reports implements Initializable {
 
         // Sort table by appointment start date/time
         appTable.getSortOrder().setAll(start);
+
+        // Set focus to name box
+        Platform.runLater(()->contacts.requestFocus());
     }
 
 
@@ -177,6 +186,18 @@ public class Reports implements Initializable {
     public void appointments(ActionEvent event) throws IOException
     {
         Parent sceneParent = FXMLLoader.load(getClass().getResource("appointments.fxml"));
+        Scene scene = new Scene(sceneParent);
+        Stage window = (Stage)((Node)event.getSource()).getScene().getWindow();
+        window.setScene(scene);
+        window.show();
+    }
+
+    /**
+     * This method logs a user out
+     */
+    public void logOut(ActionEvent event) throws IOException
+    {
+        Parent sceneParent = FXMLLoader.load(getClass().getResource("login.fxml"));
         Scene scene = new Scene(sceneParent);
         Stage window = (Stage)((Node)event.getSource()).getScene().getWindow();
         window.setScene(scene);

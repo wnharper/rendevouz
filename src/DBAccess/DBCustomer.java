@@ -1,6 +1,7 @@
 package DBAccess;
 
 import Database.DBConnection;
+import GUI.Login;
 import Model.Customer;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -111,7 +112,7 @@ public class DBCustomer {
 
         try {
             String sqlQuery = "UPDATE customers SET Customer_Name = '" + name + "', Address = '" + address + "', Postal_Code = '" + postcode +
-                              "', Phone = '" + phone + "', Last_Update = now(), Last_Updated_By = 'Warren', Division_ID = " + stateID + " WHERE Customer_ID = " + customerID + ";"; //TODO USER ID
+                              "', Phone = '" + phone + "', Last_Update = now(), Last_Updated_By = '" + Login.currentUser.getUserId() + "', Division_ID = " + stateID + " WHERE Customer_ID = " + customerID + ";";
 
             Statement statement = DBConnection.getDbConnection().createStatement();
             statement.execute(sqlQuery);

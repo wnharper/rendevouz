@@ -40,6 +40,7 @@
                       </ImageView>
                   </children>
               </AnchorPane>
+            <Label fx:id="loginError" layoutX="47.0" layoutY="141.0" styleClass="label-error" />
             </children>
         </AnchorPane>
     </children>

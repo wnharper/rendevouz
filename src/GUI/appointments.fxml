@@ -63,6 +63,19 @@
                 </ImageView>
                 <AnchorPane layoutX="5.0" layoutY="103.0" prefHeight="25.0" prefWidth="2.0" style="-fx-background-color: E74061;" />
             <Label layoutX="52.0" layoutY="107.0" styleClass="label-nav-active" text="Appointments" />
+            <HBox layoutX="15.0" layoutY="647.0">
+               <children>
+                  <Button cancelButton="true" mnemonicParsing="false" onAction="#logOut" styleClass="button-nav" text="Logout   |" />
+                  <Label fx:id="user" alignment="CENTER_RIGHT" styleClass="label-nav-inactive" textAlignment="RIGHT">
+                     <opaqueInsets>
+                        <Insets />
+                     </opaqueInsets>
+                     <HBox.margin>
+                        <Insets top="11.0" />
+                     </HBox.margin>
+                  </Label>
+               </children>
+            </HBox>
             </children>
         </AnchorPane>
         <AnchorPane layoutX="-5.0" prefHeight="112.0" prefWidth="175.0" style="-fx-background-color: E74061;">

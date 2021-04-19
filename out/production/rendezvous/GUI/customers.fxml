@@ -2,12 +2,14 @@
 
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
 
 <AnchorPane maxWidth="1120.0" prefHeight="800.0" prefWidth="1120.0" style="-fx-background-color: EDF0F4;" stylesheets="@materialDesign.css" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.CustomersController">
    <children>
@@ -36,7 +38,6 @@
       <TextField fx:id="search" layoutX="184.0" layoutY="59.0" prefHeight="40.0" prefWidth="279.0" promptText="Search Customers" />
       <AnchorPane layoutX="-5.0" layoutY="112.0" prefHeight="688.0" prefWidth="175.0" style="-fx-background-color: #28004D;">
          <children>
-            <Button cancelButton="true" layoutX="43.0" layoutY="56.0" mnemonicParsing="false" styleClass="button-nav-focused" text="Customers" />
             <Button fx:id="appointments_nav" cancelButton="true" layoutX="43.0" layoutY="96.0" mnemonicParsing="false" onAction="#appointments" styleClass="button-nav" text="Appointments" />
             <Button cancelButton="true" layoutX="43.0" layoutY="136.0" mnemonicParsing="false" onAction="#reports" styleClass="button-nav" text="Reports" />
             <ImageView fitHeight="17.0" fitWidth="11.0" layoutX="32.0" layoutY="70.0" pickOnBounds="true" preserveRatio="true">
@@ -55,6 +56,7 @@
                </image>
             </ImageView>
             <AnchorPane layoutX="5.0" layoutY="63.0" prefHeight="25.0" prefWidth="2.0" style="-fx-background-color: E74061;" />
+            <Label layoutX="54.0" layoutY="68.0" styleClass="label-nav-active" text="Customers" />
          </children>
       </AnchorPane>
       <AnchorPane layoutX="-5.0" prefHeight="112.0" prefWidth="175.0" style="-fx-background-color: E74061;">
@@ -67,5 +69,18 @@
          </children>
       </AnchorPane>
       <Button cancelButton="true" layoutX="920.0" layoutY="59.0" mnemonicParsing="false" onAction="#editCustomer" styleClass="button-raised" text="EDIT" />
+      <HBox layoutX="1.0" layoutY="759.0">
+         <children>
+            <Button cancelButton="true" mnemonicParsing="false" onAction="#logOut" styleClass="button-nav" text="Logout   |" />
+            <Label fx:id="user" alignment="CENTER_RIGHT" styleClass="label-nav-inactive" textAlignment="RIGHT">
+               <opaqueInsets>
+                  <Insets />
+               </opaqueInsets>
+               <HBox.margin>
+                  <Insets top="11.0" />
+               </HBox.margin>
+            </Label>
+         </children>
+      </HBox>
    </children>
 </AnchorPane>

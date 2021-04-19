@@ -44,10 +44,10 @@ public class Time {
     }
 
     /**
-     * Method takes a LocalDateTime object declares it at UTC and then converts
-     * it to local system time, formats the date (mm/dd/yy 00:00) and outputs a string.
+     * Method takes a LocalDateTime object declares it as UTC and then converts
+     * it to local system time
      * @param ldt
-     * @return local time in String format
+     * @return local date time object
      */
     public static LocalDateTime utcToLocalTime(LocalDateTime ldt) {
         ZonedDateTime startZdt = ZonedDateTime.of(ldt, ZoneOffset.UTC);
@@ -55,6 +55,11 @@ public class Time {
         return local.toLocalDateTime();
     }
 
+    /**
+     * Method formats a LocalDateTime object to "hh:mm a"
+     * @param ldt
+     * @return String
+     */
     public static String ToTimeString(LocalDateTime ldt) {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("hh:mm a");
         return formatter.format(ldt);

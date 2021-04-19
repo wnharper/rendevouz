@@ -3,6 +3,7 @@ package GUI;
 import DBAccess.DBAppointments;
 import DBAccess.DBContacts;
 import DBAccess.DBCustomer;
+import DBAccess.DBLogin;
 import Model.Appointment;
 import Model.Contact;
 import Model.Customer;
@@ -178,10 +179,10 @@ public class AppointmentAddController implements Initializable {
             description.getText(),
             location.getValue(),
             type.getValue(),
-            startLtc, // Convert to UTC for database
-            endLtc,  // Convert to UTC for database
+            startLtc,
+            endLtc,
             customer.getValue().getId(),
-            2, //TODO input USER ID
+            Login.currentUser.getUserId(),
             contact.getValue().getId());
 
         // Load scene

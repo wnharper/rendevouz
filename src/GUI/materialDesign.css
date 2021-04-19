@@ -41,9 +41,9 @@
     /*-swatch-500: #2196f3;*/
     -swatch-500: #7100D9;
     -swatch-200: #5500A4;
-    -swatch-300: #3D0076;
-    -swatch-400: #28004D;
-    -swatch-100: #E74061;
+    -swatch-100: #3D0076;
+    -swatch-300: #28004D;
+    -swatch-400: #E74061;
     /*default text */
     -fx-text-base-color: rgb(100.0, 100.0, 100.0);
     -fx-text-button-normal: -swatch-500;
@@ -207,6 +207,7 @@
     -fx-effect: null;
     -fx-background-color: transparent;
     -fx-text-fill: white;
+    -fx-cursor: hand;
 }
 
 .button-nav-focused {
@@ -269,11 +270,11 @@
 }
 
 .data0.chart-bar, .data4.chart-bar, .data8.chart-bar {
-    -fx-background-color: -swatch-400;
+    -fx-background-color: -swatch-300;
 }
 
 .data1.chart-bar, .data5.chart-bar, .data9.chart-bar {
-    -fx-background-color: -swatch-300;
+    -fx-background-color: -swatch-100;
 }
 
 .data2.chart-bar, .data6.chart-bar, .data10.chart-bar {
@@ -492,7 +493,7 @@
 }
 
 .label-nav-active {
-    -fx-text-fill: -swatch-100;
+    -fx-text-fill: #E74061;
 }
 
 .label-nav-inactive {

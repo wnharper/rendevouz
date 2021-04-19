@@ -30,6 +30,7 @@ import java.util.function.Predicate;
 
 public class AppointmentsController implements Initializable {
 
+    // Appointments table
     @FXML private TableView<Appointment> appTable;
     @FXML private TableColumn<Appointment, Integer> id;
     @FXML private TableColumn<Appointment, String> title;
@@ -41,12 +42,17 @@ public class AppointmentsController implements Initializable {
     @FXML private TableColumn<Appointment, LocalDateTime> end;
     @FXML private TableColumn<Appointment, String> customer;
 
+    // search bar
     @FXML private TextField search;
 
+    // filter toggles
     @FXML private Toggle week;
     @FXML private Toggle month;
     @FXML private Toggle all;
     @FXML private ToggleGroup timeSelect;
+
+    // user section
+    @FXML private Label user;
 
     private ObservableList<Appointment> appointments = FXCollections.observableArrayList();
     private FilteredList<Appointment> filteredAppointments;
@@ -55,6 +61,8 @@ public class AppointmentsController implements Initializable {
     // Initialize method, required in order for the UI/Scene to launch and function
     @Override
     public void initialize(URL url, ResourceBundle rb) {
+        // set user name
+        user.setText(Login.currentUser.getUsername());
 
         // Initialize the appointments table
         id.setCellValueFactory(new PropertyValueFactory<Appointment, Integer>("id"));
@@ -66,7 +74,6 @@ public class AppointmentsController implements Initializable {
         start.setCellValueFactory(new PropertyValueFactory<Appointment, LocalDateTime>("start"));
         end.setCellValueFactory(new PropertyValueFactory<Appointment, LocalDateTime>("end"));
         customer.setCellValueFactory(new PropertyValueFactory<Appointment, String>("customer"));
-
         appointments.addAll(DBAppointments.getAllAppointments());
         appTable.setItems(appointments);
 
@@ -213,6 +220,18 @@ public class AppointmentsController implements Initializable {
     public void reports(ActionEvent event) throws IOException
     {
         Parent sceneParent = FXMLLoader.load(getClass().getResource("reports.fxml"));
+        Scene scene = new Scene(sceneParent);
+        Stage window = (Stage)((Node)event.getSource()).getScene().getWindow();
+        window.setScene(scene);
+        window.show();
+    }
+
+    /**
+     * This method logs a user out
+     */
+    public void logOut(ActionEvent event) throws IOException
+    {
+        Parent sceneParent = FXMLLoader.load(getClass().getResource("login.fxml"));
         Scene scene = new Scene(sceneParent);
         Stage window = (Stage)((Node)event.getSource()).getScene().getWindow();
         window.setScene(scene);
