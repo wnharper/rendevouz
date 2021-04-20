@@ -25,6 +25,17 @@ import java.time.ZonedDateTime;
 import java.util.Locale;
 import java.util.ResourceBundle;
 
+/**
+ * <h2>Login</h2>
+ * The login class defines the functions for the login screen.
+ * It enables a user to enter their credentials and have them validated
+ * against the database in order to access the application.
+ *
+ * @author  Warren Harper
+ * @version 1.0
+ * @since   2021-04-20
+ */
+
 public class Login implements Initializable {
 
     // Form fields

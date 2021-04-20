@@ -4,8 +4,6 @@ import DBAccess.DBAppointments;
 import DBAccess.DBContacts;
 import Model.Appointment;
 import Model.Contact;
-import Model.Customer;
-import Utilities.Time;
 import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -30,7 +28,17 @@ import java.net.URL;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ResourceBundle;
-import java.util.function.Predicate;
+
+/**
+ * <h2>Reports</h2>
+ * The Reports class defines the functions for the reports screen.
+ * A user can view various reports in chart and table form, related to
+ * appointments.
+ *
+ * @author  Warren Harper
+ * @version 1.0
+ * @since   2021-04-20
+ */
 
 public class Reports implements Initializable {
 

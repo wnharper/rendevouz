@@ -27,6 +27,16 @@ import java.time.*;
 import java.util.Optional;
 import java.util.ResourceBundle;
 
+/**
+ * <h2>Edit Appointment</h2>
+ * The AppointmentEditController class defines the functions for the edit Appointment screen
+ * It enables a user to change existing appointment attributes and save them to the database
+ *
+ * @author  Warren Harper
+ * @version 1.0
+ * @since   2021-04-20
+ */
+
 public class AppointmentEditController implements Initializable {
 
     // Form fields

@@ -4,6 +4,17 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 
+/**
+ * <h2>Data Base Connection</h2>
+ * The DBConnection class establishes and provides a connection to the
+ * MYSQL database
+ *
+ * @author  Warren Harper
+ * @version 1.0
+ * @since   2021-04-20
+ */
+
+
 public class DBConnection {
 
     // Database attributes

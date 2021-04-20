@@ -1,5 +1,15 @@
 package Model;
 
+/**
+ * <h2>Customer</h2>
+ * The customer class provides the structure and attributes in order to
+ * create a customer.
+ *
+ * @author  Warren Harper
+ * @version 1.0
+ * @since   2021-04-04
+ */
+
 public class Customer {
     private final int id;
     private String name;

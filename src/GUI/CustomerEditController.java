@@ -21,6 +21,16 @@ import java.net.URL;
 import java.util.Optional;
 import java.util.ResourceBundle;
 
+/**
+ * <h2>Edit Customer</h2>
+ * The CustomerEditController class defines the functions for the edit customer screen
+ * It enables a user to change existing customer attributes and save them to the database
+ *
+ * @author  Warren Harper
+ * @version 1.0
+ * @since   2021-04-20
+ */
+
 public class CustomerEditController implements Initializable {
 
     private static int customerId;

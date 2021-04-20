@@ -4,11 +4,20 @@ import javafx.scene.control.SpinnerValueFactory;
 
 import java.time.*;
 import java.time.format.DateTimeFormatter;
-import java.time.format.FormatStyle;
 import java.time.temporal.ChronoUnit;
 import java.time.temporal.TemporalField;
 import java.time.temporal.WeekFields;
 import java.util.Locale;
+
+/**
+ * <h2>Time</h2>
+ * The Time class provides various methods that relate to time and timezones, including
+ * timezone conversion.
+ *
+ * @author  Warren Harper
+ * @version 1.0
+ * @since   2021-04-04
+ */
 
 public class Time {
 

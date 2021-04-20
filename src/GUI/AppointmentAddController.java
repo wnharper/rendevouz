@@ -3,7 +3,6 @@ package GUI;
 import DBAccess.DBAppointments;
 import DBAccess.DBContacts;
 import DBAccess.DBCustomer;
-import DBAccess.DBLogin;
 import Model.Appointment;
 import Model.Contact;
 import Model.Customer;
@@ -27,6 +26,16 @@ import java.net.URL;
 import java.time.*;
 import java.util.Optional;
 import java.util.ResourceBundle;
+
+/**
+ * <h2>Add Appointment</h2>
+ * The AppointmentAddController class defines the functions for the Add Appointment screen
+ * It enables a user to input appointment attributes and save the appointment to the database
+ *
+ * @author  Warren Harper
+ * @version 1.0
+ * @since   2021-04-20
+ */
 
 public class AppointmentAddController implements Initializable {
 
@@ -123,8 +132,8 @@ public class AppointmentAddController implements Initializable {
 
 
     /**
-     * This method uses form details to insert a new customer into the database, and
-     * then switches back to the customer table scene
+     * This method uses form details to insert a new appointment into the database, and
+     * then switches back to the appointment scene
      */
     public void createAppointment(ActionEvent event) throws IOException
     {

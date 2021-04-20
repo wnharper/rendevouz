@@ -11,10 +11,20 @@ import javafx.scene.chart.XYChart;
 import java.sql.*;
 import java.time.LocalDateTime;
 
+/**
+ * <h2>Data Base Appointments</h2>
+ * DBAppointments provides methods in order to retrieve, insert, update and remove data from the database
+ * related to appointments
+ *
+ * @author  Warren Harper
+ * @version 1.0
+ * @since   2021-04-20
+ */
+
 public class DBAppointments {
 
     /**
-     * Method returns a list of all appointments occuring in the next month
+     * Method returns a list of all appointments in the database
      *
      * @return Observable List
      */
@@ -139,7 +149,7 @@ public class DBAppointments {
     }
 
     /**
-     * Method takes deletes appointment in database according to appointment ID
+     * Method deletes appointment in database according to appointment ID
      *
      * @param appointmentId
      */
@@ -159,7 +169,7 @@ public class DBAppointments {
     }
 
     /**
-     * Method returns a list of all appointments occuring in the next month
+     * Method returns a list of all appointments occurring in the next month
      *
      * @return Observable List
      */

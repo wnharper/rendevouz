@@ -1,9 +1,17 @@
 package Model;
 
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
-
 import java.time.LocalDateTime;
+
+/**
+ * <h2>Appointment</h2>
+ * The appointment class provides the structure and attributes in order to
+ * create an appointment. Methods are provided in order to return attributes
+ * including appointment types.
+ *
+ * @author  Warren Harper
+ * @version 1.0
+ * @since   2021-04-04
+ */
 
 public class Appointment {
     private int id;

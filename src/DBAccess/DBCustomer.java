@@ -11,6 +11,16 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 
+/**
+ * <h2>Data Base Customer</h2>
+ * DBCustomer provides methods in order to retrieve, insert, update and remove data from the database
+ * related to customers
+ *
+ * @author  Warren Harper
+ * @version 1.0
+ * @since   2021-04-20
+ */
+
 public class DBCustomer {
 
     /**
@@ -42,30 +52,6 @@ public class DBCustomer {
                 Customer customer = new Customer(customerId, customerName, customerAddress, postCode, country, state, phone, appointments);
 
                 customerList.add(customer);
-            }
-        } catch (SQLException throwables) {
-            throwables.printStackTrace();
-        }
-        return customerList;
-    }
-
-    /**
-     * Method returns a list of all the customers in String format
-     * @return Observable List
-     */
-    public static ObservableList<String> getAllCustomersString() {
-        ObservableList<String> customerList = FXCollections.observableArrayList();
-
-        try {
-            String sqlQuery = "select customers.Customer_Name from customers";
-
-            PreparedStatement pStatement = DBConnection.getDbConnection().prepareStatement(sqlQuery);
-
-            ResultSet resultSet = pStatement.executeQuery();
-
-            while (resultSet.next()) {
-                String name = resultSet.getString("Customer_Name");
-                customerList.add(name);
             }
         } catch (SQLException throwables) {
             throwables.printStackTrace();
@@ -169,10 +155,4 @@ public class DBCustomer {
         }
 
     }
-
-
-
-
-
-
 }

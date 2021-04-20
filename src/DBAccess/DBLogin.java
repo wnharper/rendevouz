@@ -1,7 +1,6 @@
 package DBAccess;
 
 import Database.DBConnection;
-import Model.Country;
 import Model.User;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -9,6 +8,15 @@ import javafx.collections.ObservableList;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+
+/**
+ * <h2>Data Base Login</h2>
+ * DBLogin provides methods in order to validate user credentials and obtain user attributes
+ *
+ * @author  Warren Harper
+ * @version 1.0
+ * @since   2021-04-20
+ */
 
 public class DBLogin {
 
@@ -58,27 +66,5 @@ public class DBLogin {
         return newUser;
     }
 
-    /**
-     * Method returns a list of all the Countries in String format
-     * @return Observable List
-     */
-    public static ObservableList<String> getAllCountriesString() {
-        ObservableList<String> countryList = FXCollections.observableArrayList();
 
-        try {
-            String sqlQuery = "SELECT countries.Country FROM countries";
-
-            PreparedStatement pStatement = DBConnection.getDbConnection().prepareStatement(sqlQuery);
-
-            ResultSet resultSet = pStatement.executeQuery();
-
-            while (resultSet.next()) {
-                String name = resultSet.getString("Country");
-                countryList.add(name);
-            }
-        } catch (SQLException throwables) {
-            throwables.printStackTrace();
-        }
-        return countryList;
-    }
 }

@@ -4,6 +4,8 @@ import DBAccess.DBAppointments;
 import Model.Appointment;
 import Utilities.Alerts;
 import Utilities.Time;
+import javafx.animation.FadeTransition;
+import javafx.animation.PauseTransition;
 import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -18,7 +20,9 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
+import javafx.util.Duration;
 
 import java.io.IOException;
 import java.net.URL;
@@ -27,6 +31,17 @@ import java.time.format.DateTimeFormatter;
 import java.util.Optional;
 import java.util.ResourceBundle;
 import java.util.function.Predicate;
+
+/**
+ * <h2>Appointments</h2>
+ * The AppointmentController class defines the functions for the Appointment screen.
+ * It enables a user to view and filter current appointments. It provides notifications
+ * for upcoming appointments.
+ *
+ * @author  Warren Harper
+ * @version 1.0
+ * @since   2021-04-20
+ */
 
 public class AppointmentsController implements Initializable {
 
@@ -42,6 +57,9 @@ public class AppointmentsController implements Initializable {
     @FXML private TableColumn<Appointment, LocalDateTime> end;
     @FXML private TableColumn<Appointment, String> customer;
 
+    // notification bar
+    @FXML private AnchorPane notification;
+    @FXML private Label notification_text;
     // search bar
     @FXML private TextField search;
 
@@ -61,6 +79,34 @@ public class AppointmentsController implements Initializable {
     // Initialize method, required in order for the UI/Scene to launch and function
     @Override
     public void initialize(URL url, ResourceBundle rb) {
+
+        // Load appointments into list
+        appointments.addAll(DBAppointments.getAllAppointments());
+
+        /*
+        Upcoming appointment notification
+         */
+        // Fade out notification bar
+        FadeTransition ft = new FadeTransition(Duration.millis(300), notification);
+        ft.setFromValue(1.0);
+        ft.setToValue(0.0);
+        // Set notification text
+        notification_text.setText("There are no appointments in the next 15 minutes");
+        // Acquire current time
+        LocalDateTime timeNow = LocalDateTime.now();
+        // Search for appointments occurring in the next 15 minutes
+        for (Appointment appointment : appointments) {
+            if (appointment.getStart().isAfter(timeNow) && appointment.getStart().isBefore(timeNow.plusMinutes(15))){
+                DateTimeFormatter formatter = DateTimeFormatter.ofPattern("hh:mm a");
+                notification_text.setText("Upcoming appointment with " + appointment.getCustomer() + " starting at " + formatter.format(appointment.getStart()));
+            }
+        }
+        // Hide notification bar after 6 seconds
+        PauseTransition delay = new PauseTransition(Duration.seconds(6));
+        delay.setOnFinished( event -> ft.play());
+        delay.play();
+
+
         // set user name
         user.setText(Login.currentUser.getUsername());
 
@@ -74,7 +120,7 @@ public class AppointmentsController implements Initializable {
         start.setCellValueFactory(new PropertyValueFactory<Appointment, LocalDateTime>("start"));
         end.setCellValueFactory(new PropertyValueFactory<Appointment, LocalDateTime>("end"));
         customer.setCellValueFactory(new PropertyValueFactory<Appointment, String>("customer"));
-        appointments.addAll(DBAppointments.getAllAppointments());
+
         appTable.setItems(appointments);
 
         // Date time formatter for start/end columns

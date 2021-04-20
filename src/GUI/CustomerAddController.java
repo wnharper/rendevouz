@@ -20,6 +20,16 @@ import java.net.URL;
 import java.util.Optional;
 import java.util.ResourceBundle;
 
+/**
+ * <h2>Add Customer</h2>
+ * The CustomerAddController class defines the functions for the Add customer screen
+ * It enables a user to input customer attributes and save the customer to the database
+ *
+ * @author  Warren Harper
+ * @version 1.0
+ * @since   2021-04-20
+ */
+
 public class CustomerAddController implements Initializable {
 
     // Form fields

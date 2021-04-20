@@ -9,6 +9,16 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
+/**
+ * <h2>Data Base Countries</h2>
+ * DBCountries provides methods in order to retrieve, insert, update and remove data from the database
+ * related to countries
+ *
+ * @author  Warren Harper
+ * @version 1.0
+ * @since   2021-04-20
+ */
+
 public class DBCountries {
 
     /**

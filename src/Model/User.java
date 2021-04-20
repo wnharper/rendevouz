@@ -1,5 +1,15 @@
 package Model;
 
+/**
+ * <h2>User</h2>
+ * The user class provides the structure and attributes in order to
+ * create a user.
+ *
+ * @author  Warren Harper
+ * @version 1.0
+ * @since   2021-04-04
+ */
+
 public class User {
 
     private int userId;

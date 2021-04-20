@@ -2,6 +2,16 @@ package Utilities;
 
 import javafx.scene.control.*;
 
+/**
+ * <h2>Alerts</h2>
+ * The alerts class provides predefined methods in order to display
+ * alerts or warning dialog boxes in the JavaFX UI
+ *
+ * @author  Warren Harper
+ * @version 1.0
+ * @since   2021-04-04
+ */
+
 public class Alerts {
 
     /**

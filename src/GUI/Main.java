@@ -7,6 +7,17 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 
+/**
+ * <h1>Rendevouz</h1>
+ * Rendevouz is an application designed to create, store and edit individual
+ * Customer information. The user is then able to book appointments with
+ * stored customers.
+ *
+ * @author  Warren Harper
+ * @version 1.0
+ * @since   2021-04-20
+ */
+
 public class Main extends Application {
 
     @Override

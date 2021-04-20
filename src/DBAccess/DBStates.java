@@ -9,6 +9,16 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
+/**
+ * <h2>Data Base States</h2>
+ * DBStates provides methods in order to retrieve data from the database
+ * related to country states
+ *
+ * @author  Warren Harper
+ * @version 1.0
+ * @since   2021-04-20
+ */
+
 public class DBStates {
     /**
      * Method returns a list of all US state Objects

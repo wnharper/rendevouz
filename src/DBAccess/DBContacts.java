@@ -9,6 +9,16 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
+/**
+ * <h2>Data Base Contacts</h2>
+ * DBContacts provides methods in order to retrieve, insert, update and remove data from the database
+ * related to contacts
+ *
+ * @author  Warren Harper
+ * @version 1.0
+ * @since   2021-04-20
+ */
+
 public class DBContacts {
 
     /**
