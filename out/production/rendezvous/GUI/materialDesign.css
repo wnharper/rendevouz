@@ -1,49 +1,16 @@
-/*
- * The MIT License (MIT)
- *
- * Copyright (c) 2015 - AGIX | Innovative Engineering
- *
- * Permission is hereby granted, free of charge, to any person obtaining a copy
- * of this software and associated documentation files (the "Software"), to deal
- * in the Software without restriction, including without limitation the rights
- * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
- * copies of the Software, and to permit persons to whom the Software is
- * furnished to do so, subject to the following conditions:
- *
- * The above copyright notice and this permission notice shall be included in all
- * copies or substantial portions of the Software.
- *
- * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
- * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
- * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT 	SHALL THE
- * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
- * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
- * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
- * SOFTWARE.
- *
- */
-
-/*
- *   This is a Material Design CSS for JavaFX
- */
-
-/*******************************************************************************
+/*-----------------------------------------------------------------------------/
  *                                                                             *
  * Root					 				                       				   *
  *                                                                             *
  ******************************************************************************/
 .root {
-    /* Swatch Colors - Blue*/
-    /*-swatch-100: #bbdefb;*/
-    /*-swatch-200: #90CAF9;*/
-    /*-swatch-300: #64BEF6;*/
-    /*-swatch-400: #42A5F5;*/
-    /*-swatch-500: #2196f3;*/
+
     -swatch-500: #7100D9;
     -swatch-200: #5500A4;
     -swatch-100: #3D0076;
     -swatch-300: #28004D;
     -swatch-400: #E74061;
+
     /*default text */
     -fx-text-base-color: rgb(100.0, 100.0, 100.0);
     -fx-text-button-normal: -swatch-500;
@@ -55,36 +22,30 @@
     -fx-text-fill: -fx-text-base-color;
     -dark: rgb(47.0, 52.0, 57.0);
     -fx-background-color: -dark;
-    /*default font */
+
+    /* default font */
     -fx-font-family: 'Roboto Medium';
     -fx-font-size: 14.0px;
     -fx-disabled-opacity: 0.6;
-    /*default colors */
+
+    /* default colors */
     -swatch-grey: rgb(200.0, 200.0, 200.0);
     -swatch-dark-grey: rgb(150.0, 150.0, 150.0);
     -swatch-light-grey: rgb(230.0, 230.0, 230.0);
     -swatch-toolbar: rgb(245.0, 245.0, 245.0);
     -swatch-toolbar-selected: rgb(215.0, 215.0, 215.0);
-    /*
-     Modena colors
-     */
-    -fx-dark-text-color: white; /* Text color when selected*/
+
+    -fx-dark-text-color: white; /* Text color when selected */
     -fx-mid-text-color: -fx-text-base-color;
     -fx-light-text-color: -swatch-light-grey;
     -fx-body-color: white;
-    /* A bright blue for the focus indicator of objects. Typically used as the
-     * first color in -fx-background-color for the "focused" pseudo-class. Also
-     * typically used with insets of -1.4 to provide a glowing effect.
-     */
     -fx-focus-color: -swatch-400;
     -fx-faint-focus-color: -swatch-200;
-    /* A bright blue for highlighting/accenting objects.  For example: selected
-     * text; selected items in menus, lists, trees, and tables; progress bars */
     -fx-accent: -swatch-400;
     -fx-dark-text-color: white;
 }
 
-/*******************************************************************************
+/*-----------------------------------------------------------------------------/
  *                                                                             *
  * Material Design - Cards 				                       				   *
  *                                                                             *
@@ -134,7 +95,7 @@
     0);
 }
 
-/*******************************************************************************
+/*-----------------------------------------------------------------------------/
  *                                                                             *
  * Button & ToggleButton                                                       *
  *                                                                             *
@@ -221,9 +182,9 @@
     -fx-text-fill: #E74061;
 }
 
-/*******************************************************************************
+/*-----------------------------------------------------------------------------/
  *                                                                             *
- * ComboBox, ChoiceBox COMMON                                                 *
+ * ComboBox, ChoiceBox                                                         *
  *                                                                             *
  ******************************************************************************/
 .combo-box-base, .choice-box {
@@ -260,14 +221,12 @@
     -fx-background-color: -swatch-light-grey;
 }
 
-/*******************************************************************************
+/*-----------------------------------------------------------------------------/
  *                                                                             *
  * Charts                                                                      *
  *                                                                             *
  ******************************************************************************/
-.chart-bar {
-    /*-fx-background-color: #E74061;*/
-}
+
 
 .data0.chart-bar, .data4.chart-bar, .data8.chart-bar {
     -fx-background-color: -swatch-300;
@@ -286,7 +245,7 @@
 }
 
 
-/*******************************************************************************
+/*-----------------------------------------------------------------------------/
  *                                                                             *
  * CheckBox                                                                    *
  *                                                                             *
@@ -328,7 +287,7 @@
     -fx-padding: 0.45em;
 }
 
-/*******************************************************************************
+/*-----------------------------------------------------------------------------/
  *                                                                             *
  * ChoiceBox                                                                   *
  *                                                                             *
@@ -360,7 +319,7 @@
     -fx-padding: 0.68em 0.68em 0.0em 0.0em;
 }
 
-/*******************************************************************************
+/*-----------------------------------------------------------------------------/
  *                                                                             *
  * ComboBox                                                                    *
  *                                                                             *
@@ -404,7 +363,7 @@
     -fx-padding: 0 10 10 10;
 }
 
-/*******************************************************************************
+/*-----------------------------------------------------------------------------/
  *                                                                             *
  * Date Picker			                                                       *
  *                                                                             *
@@ -438,11 +397,12 @@
     -fx-font-size: 1em;
 }
 
-/*******************************************************************************
+/*-----------------------------------------------------------------------------/
  *                                                                             *
  * Date picker						                                           *
  *                                                                             *
- ******************************************************************************/
+------------------------------------------------------------------------------*/
+
 .date-picker .arrow-button {
     -fx-background-color: transparent;
 }
@@ -455,31 +415,35 @@
     -fx-border-width: 0;
 }
 
-/*******************************************************************************
+/*-----------------------------------------------------------------------------/
  *                                                                             *
- * HTML Editor 				                       			  				   *
+ * Dialog box				                                                   *
  *                                                                             *
- ******************************************************************************/
-.html-editor {
-    -fx-background-color: white;
-    -fx-border-width: 2 0 2 0;
-    -fx-border-color: -swatch-grey;
+------------------------------------------------------------------------------*/
+
+.dialog-pane {
+    -fx-background-color: color-1;
 }
 
-.html-editor .web-view {
-    -fx-border-color: grey;
-    -fx-border-width: grey;
+.dialog-pane .label {
+    -fx-text-fill: white;
 }
 
-.web-view {
-    -fx-font-smoothing-type: gray;
+.dialog-pane:header .header-panel {
+    -fx-background-color: -swatch-200;
 }
 
-/*******************************************************************************
+.dialog-pane:header .header-panel .label {
+    -fx-font-style: italic;
+    -fx-font-size: 2em;
+}
+
+
+/*-----------------------------------------------------------------------------/
  *                                                                             *
  * Label                                                                       *
  *                                                                             *
- ******************************************************************************/
+------------------------------------------------------------------------------*/
 .label {
     -fx-text-fill: -fx-text-base-color;
 }
@@ -512,7 +476,7 @@
     -fx-font-style: italic;
 }
 
-/*******************************************************************************
+/*-----------------------------------------------------------------------------/
  *                                                                             *
  * List, Tree, Table COMMON                                                    *
  *                                                                             *
@@ -531,7 +495,7 @@
     -fx-cell-size: 40;
 }
 
-/*******************************************************************************
+/*-----------------------------------------------------------------------------/
  *                                                                             *
  * ProgressBar                                                                 *
  *                                                                             *
@@ -558,7 +522,7 @@
     -fx-effect: null;
 }
 
-/*******************************************************************************
+/*-----------------------------------------------------------------------------/
  *                                                                             *
  * ProgressIndicator                                                           *
  *                                                                             *
@@ -583,7 +547,7 @@
     -fx-font-size: 11px;
 }
 
-/*******************************************************************************
+/*-----------------------------------------------------------------------------/
  *                                                                             *
  * RadioButton                                                                 *
  *                                                                             *
@@ -619,7 +583,7 @@
     -fx-background-insets: 0;
 }
 
-/*******************************************************************************
+/*-----------------------------------------------------------------------------/
  *                                                                             *
  * Separators		                   	                                       *
  *                                                                             *
@@ -628,7 +592,7 @@
     -fx-padding: 16 -16 16 -16;
 }
 
-/*******************************************************************************
+/*-----------------------------------------------------------------------------/
  *                                                                             *
  * Scroll Bar			                                                       *
  *                                                                             *
@@ -660,7 +624,7 @@
     -fx-background-color: transparent;
 }
 
-/*******************************************************************************
+/*-----------------------------------------------------------------------------/
  *                                                                             *
  * Slider                                                                      *
  *                                                                             *
@@ -682,7 +646,7 @@
     -fx-background-color: -swatch-500;
 }
 
-/*******************************************************************************
+/*-----------------------------------------------------------------------------/
  *                                                                             *
  * Spinner                                                                     *
  *                                                                             *
@@ -721,21 +685,19 @@
     -fx-fill: swatch-500;
 }
 
-/*******************************************************************************
+/*-----------------------------------------------------------------------------/
  *                                                                             *
  * Tables								                       				   *
  *                                                                             *
  ******************************************************************************/
 .table-view, .tree-table-view {
-    /* Constants used throughout the tableview. */
+
     -fx-table-header-border-color: transparent;
-    -fx-table-cell-border-color: -fx-box-border; /* Horizontal Lines*/
+    -fx-table-cell-border-color: -fx-box-border;
     -fx-background-color: transparent;
 }
 
-/* The column header row is made up of a number of column-header, one for each
-   TableColumn, and a 'filler' area that extends from the right-most column
-   to the edge of the tableview, or up to the 'column control' button. */
+
 .table-view .filler, .tree-table-view .filler, .table-view .column-header,
 .tree-table-view .column-header {
     -fx-size: 65;
@@ -769,11 +731,11 @@
 }
 
 .table-cell {
-    -fx-border-color: transparent; /* Vertical Lines*/
+    -fx-border-color: transparent;
     -fx-border-width: 1;
 }
 
-/*******************************************************************************
+/*-----------------------------------------------------------------------------/
  *                                                                             *
  * Text, Text field & Text area                                                *
  *                                                                             *
@@ -815,7 +777,7 @@
     -fx-border-color: -swatch-500;
 }
 
-/*******************************************************************************
+/*-----------------------------------------------------------------------------/
  *                                                                             *
  * Tool bar	& Menu bar		                       			  				   *
  *                                                                             *

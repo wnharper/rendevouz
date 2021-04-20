@@ -288,4 +288,8 @@ public class AppointmentsController implements Initializable {
         window.setScene(scene);
         window.show();
     }
+
+    public void upcomingAppointments() {
+        //JFXDialogLayout dialogLayout = new JFXDialogLayout();
+    }
 }

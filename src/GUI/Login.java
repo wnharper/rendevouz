@@ -22,6 +22,7 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.net.URL;
 import java.time.ZonedDateTime;
+import java.util.Locale;
 import java.util.ResourceBundle;
 
 public class Login implements Initializable {
@@ -33,16 +34,36 @@ public class Login implements Initializable {
     @FXML private Label loginError;
 
     // Current user
+    @FXML private Label timeZone;
     public static User currentUser;
+
+    // error messages
+    private String usernameError = "Enter a username";
+    private String passwordError = "Enter a password";
+    private String invalidUserPass = "Invalid username or password";
+
 
 
     // Initialize method, required in order for the UI/Scene to launch and function
     @Override
     public void initialize (URL url, ResourceBundle rb) {
 
+        // Display user's time zone
+        ZonedDateTime userLocation = ZonedDateTime.now();
+        timeZone.setText(userLocation.getZone().toString());
 
+        // If user's machine's language is set to French, change login form to copy to French
+        if (Locale.getDefault() == Locale.FRENCH || Locale.getDefault() == Locale.CANADA_FRENCH || Locale.getDefault() == Locale.FRANCE) {
+            username.setPromptText("Nom d'utilisateur");
+            password.setPromptText("Le mot de passe");
+            login.setText("CONNEXION");
+            usernameError = "Entrez un nom d'utilisateur";
+            passwordError = "Entrer un mot de passe";
+            invalidUserPass = "Nom d'utilisateur ou mot de passe invalide";
 
-        // Set focus to name box
+        }
+
+        // Set focus to username box
         Platform.runLater(()->username.requestFocus());
 
     }
@@ -53,8 +74,8 @@ public class Login implements Initializable {
      */
     public void login(ActionEvent event) throws IOException
     {
-        if (Alerts.isFieldEmpty(username, loginError, "Enter a username")) return;
-        if (Alerts.isFieldEmpty(password, loginError, "Enter a password")) return;
+        if (Alerts.isFieldEmpty(username, loginError, usernameError)) return;
+        if (Alerts.isFieldEmpty(password, loginError, passwordError)) return;
 
         // Log current time with location/time zone info
         ZonedDateTime timeStamp = ZonedDateTime.now();
@@ -74,9 +95,12 @@ public class Login implements Initializable {
             currentUser = (DBLogin.getUser(username.getText(), password.getText()));
 
             FXMLLoader loader = new FXMLLoader();
-            loader.setLocation(getClass().getResource("customers.fxml"));
+            loader.setLocation(getClass().getResource("appointments.fxml"));
             Parent parent = loader.load();
             Scene scene = new Scene(parent);
+
+            // Load and access the controller
+            AppointmentsController controller = loader.getController();
 
             Stage window = (Stage)((Node)event.getSource()).getScene().getWindow();
             window.setScene(scene);
@@ -87,7 +111,7 @@ public class Login implements Initializable {
             myWriter.write(timeStamp + " " + username.getText() + " logged in unsuccessfully\n");
             myWriter.close();
             // Display error
-            loginError.setText("Invalid username or password");
+            loginError.setText(invalidUserPass);
 
             return;
         }

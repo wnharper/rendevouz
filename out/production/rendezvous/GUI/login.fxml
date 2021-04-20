@@ -41,6 +41,7 @@
                   </children>
               </AnchorPane>
             <Label fx:id="loginError" layoutX="47.0" layoutY="141.0" styleClass="label-error" />
+            <Label fx:id="timeZone" alignment="CENTER" contentDisplay="CENTER" layoutX="68.0" layoutY="420.0" prefHeight="18.0" prefWidth="259.0" />
             </children>
         </AnchorPane>
     </children>

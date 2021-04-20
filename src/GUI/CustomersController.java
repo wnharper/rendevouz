@@ -33,6 +33,7 @@ public class CustomersController implements Initializable {
     @FXML private TableColumn<Customer, Integer> id;
     @FXML private TableColumn<Customer, String> name;
     @FXML private TableColumn<Customer, String> address;
+    @FXML private TableColumn<Customer, String> state;
     @FXML private TableColumn<Customer, String> country;
     @FXML private TableColumn<Customer, Integer> appointments;
 
@@ -53,6 +54,7 @@ public class CustomersController implements Initializable {
         id.setCellValueFactory(new PropertyValueFactory<Customer, Integer>("id"));
         name.setCellValueFactory(new PropertyValueFactory<Customer, String>("name"));
         address.setCellValueFactory(new PropertyValueFactory<Customer, String>("address"));
+        state.setCellValueFactory(new PropertyValueFactory<Customer, String>("state"));
         country.setCellValueFactory(new PropertyValueFactory<Customer, String>("country"));
         appointments.setCellValueFactory(new PropertyValueFactory<Customer, Integer>("appointments"));
 
