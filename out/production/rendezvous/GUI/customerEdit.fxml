@@ -10,7 +10,7 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.VBox?>
 
-<AnchorPane maxWidth="1120.0" prefHeight="800.0" prefWidth="1120.0" style="-fx-background-color: EDF0F4;" stylesheets="@materialDesign.css" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.CustomerEditController">
+<AnchorPane maxWidth="1120.0" prefHeight="800.0" prefWidth="1120.0" style="-fx-background-color: EDF0F4;" stylesheets="@rendezvousDesign.css" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.CustomerEditController">
     <children>
         <AnchorPane layoutX="184.0" layoutY="112.0" prefHeight="670.0" prefWidth="922.0" style="-fx-background-color: fff;">
             <padding>

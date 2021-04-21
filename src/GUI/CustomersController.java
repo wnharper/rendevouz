@@ -17,6 +17,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 
 import java.io.IOException;
@@ -41,8 +42,10 @@ public class CustomersController implements Initializable {
     @FXML private TableColumn<Customer, Integer> id;
     @FXML private TableColumn<Customer, String> name;
     @FXML private TableColumn<Customer, String> address;
+    @FXML private TableColumn<Customer, String> phone;
     @FXML private TableColumn<Customer, String> state;
     @FXML private TableColumn<Customer, String> country;
+    @FXML private TableColumn<Customer, String> postCode;
     @FXML private TableColumn<Customer, Integer> appointments;
 
     // search bar
@@ -50,6 +53,10 @@ public class CustomersController implements Initializable {
 
     // user section
     @FXML private Label user;
+
+    // notification bar
+    @FXML private AnchorPane notification;
+    @FXML private Label notification_text;
 
     private ObservableList<Customer> customers = FXCollections.observableArrayList();
 
@@ -61,9 +68,11 @@ public class CustomersController implements Initializable {
         // Initialize the customers table
         id.setCellValueFactory(new PropertyValueFactory<Customer, Integer>("id"));
         name.setCellValueFactory(new PropertyValueFactory<Customer, String>("name"));
+        phone.setCellValueFactory(new PropertyValueFactory<Customer, String>("phone"));
         address.setCellValueFactory(new PropertyValueFactory<Customer, String>("address"));
         state.setCellValueFactory(new PropertyValueFactory<Customer, String>("state"));
         country.setCellValueFactory(new PropertyValueFactory<Customer, String>("country"));
+        postCode.setCellValueFactory(new PropertyValueFactory<Customer, String>("postcode"));
         appointments.setCellValueFactory(new PropertyValueFactory<Customer, Integer>("appointments"));
 
 
@@ -210,6 +219,11 @@ public class CustomersController implements Initializable {
             // Delete selected row
             DBCustomer.deleteCustomer(customerTable.getSelectionModel().getSelectedItem().getId());
             customers.remove(customerTable.getSelectionModel().getSelectedItem());
+
+            // display notification
+            notification_text.setText("Customer deleted");
+
+            Alerts.notify(2, notification);
         }
     }
 

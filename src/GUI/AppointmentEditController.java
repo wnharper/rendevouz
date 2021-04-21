@@ -156,7 +156,16 @@ public class AppointmentEditController implements Initializable {
             // Do not compare current appointment
             if (appt.getId() != appointmentId) {
                 // Check if start and end times conflict with any other appointments
-                if ((appt.getStart().isAfter(startLtc) && appt.getStart().isBefore(endLtc)) || appt.getEnd().isAfter(startLtc) && appt.getEnd().isBefore(endLtc)){
+                // Check if start and end times conflict with any other appointments
+                if ((appt.getStart().isAfter(startLtc) && appt.getStart().isBefore(endLtc))
+                        || appt.getEnd().isAfter(startLtc) && appt.getEnd().isBefore(endLtc)
+                        || appt.getEnd().isAfter(startLtc) && appt.getEnd().isBefore(endLtc)
+                        || appt.getStart().equals(startLtc)
+                        || appt.getEnd().equals(endLtc)
+                        || appt.getStart().isBefore(startLtc) && appt.getEnd().isAfter(endLtc)
+                        || appt.getStart().isAfter(startLtc) && appt.getEnd().isBefore(endLtc)
+
+                ){
                     dateTimeError.setText("Appointment time conflicts with another appointment (" + Time.ToTimeString(Time.utcToLocalTime(appt.getStart())) + " - " + Time.ToTimeString(Time.utcToLocalTime(appt.getEnd())) + ")");
                     return;
                 }

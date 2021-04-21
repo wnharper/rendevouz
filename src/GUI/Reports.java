@@ -16,9 +16,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.chart.BarChart;
-import javafx.scene.chart.CategoryAxis;
-import javafx.scene.chart.NumberAxis;
+import javafx.scene.chart.*;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
@@ -27,6 +25,7 @@ import java.io.IOException;
 import java.net.URL;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.Arrays;
 import java.util.ResourceBundle;
 
 /**
@@ -56,7 +55,7 @@ public class Reports implements Initializable {
     @FXML private TableColumn<Appointment, String> customer;
 
     // Charts
-    @FXML private BarChart<?, ?> monthChart;
+    @FXML private StackedBarChart<String, Number> monthChart;
     @FXML private CategoryAxis x;
     @FXML private NumberAxis y;
     @FXML private BarChart<?, ?> typeChart;
@@ -78,7 +77,14 @@ public class Reports implements Initializable {
     public void initialize(URL url, ResourceBundle rb) {
 
         // Charts
-        monthChart.getData().addAll(DBAppointments.appointmentCountData());
+
+
+
+
+        for (XYChart.Series series : DBAppointments.appointmentCountData()) { // iterate through Arraylist to add month/type data
+            monthChart.getData().add(series);
+        }
+
         typeChart.getData().addAll(DBAppointments.appointmentTypeData());
         locationChart.getData().addAll(DBAppointments.appointmentLengthData());
 

@@ -1,5 +1,5 @@
 /**
- * Rendevouz style sheet
+ * Rendezvous style sheet
  *
  * @author  Warren Harper
  * @version 1.0
@@ -13,15 +13,15 @@
 ------------------------------------------------------------------------------*/
 .root {
 
-    -swatch-500: #7100D9;
-    -swatch-200: #5500A4;
-    -swatch-100: #3D0076;
-    -swatch-300: #28004D;
-    -swatch-400: #E74061;
+    -color-10: #7100D9;
+    -color-20: #5500A4;
+    -color-30: #3D0076;
+    -color-40: #28004D;
+    -color-50: #E74061;
 
     /*default text */
     -fx-text-base-color: rgb(100.0, 100.0, 100.0);
-    -fx-text-button-normal: -swatch-500;
+    -fx-text-button-normal: -color-10;
     -fx-text-button-colored: rgb(255.0, 255.0, 255.0);
     -fx-text-button-text: rgb(100.0, 100.0, 100.0);
     -fx-text-title-color: rgb(45.0, 45.0, 45.0);
@@ -47,15 +47,15 @@
     -fx-mid-text-color: -fx-text-base-color;
     -fx-light-text-color: -swatch-light-grey;
     -fx-body-color: white;
-    -fx-focus-color: -swatch-400;
-    -fx-faint-focus-color: -swatch-200;
-    -fx-accent: -swatch-400;
+    -fx-focus-color: -color-50;
+    -fx-faint-focus-color: -color-20;
+    -fx-accent: -color-50;
     -fx-dark-text-color: white;
 }
 
 /*-----------------------------------------------------------------------------/
  *                                                                             *
- * Material Design - Cards 				                       				   *
+ * cards				                       				   *
  *                                                                             *
 ------------------------------------------------------------------------------*/
 .card {
@@ -105,7 +105,7 @@
 
 /*-----------------------------------------------------------------------------/
  *                                                                             *
- * Button & ToggleButton                                                       *
+ * Button / Toggle Button                                                       *
  *                                                                             *
 ------------------------------------------------------------------------------*/
 .button-raised {
@@ -135,7 +135,7 @@
 }
 
 .button:default {
-    -fx-background-color: -swatch-100;
+    -fx-background-color: -color-30;
     -fx-text-fill: -fx-text-button-colored;
 }
 
@@ -144,8 +144,8 @@
 }
 
 .toggle-button:focused:selected {
-    -fx-background-color: derive(-swatch-500, 50.0%),
-    derive(-swatch-500, -20.0%);
+    -fx-background-color: derive(-color-10, 50.0%),
+    derive(-color-10, -20.0%);
     -fx-background-insets: 0.0, 0.2em;
     -fx-text-fill: -fx-text-button-colored;
 }
@@ -182,7 +182,7 @@
 .button-nav-focused {
     -fx-effect: null;
     -fx-background-color: transparent;
-    -fx-text-fill: -swatch-100;
+    -fx-text-fill: -color-30;
 }
 
 .button-nav:pressed {
@@ -204,7 +204,7 @@
 }
 
 .combo-box:focused, .choice-box:focused {
-    -fx-border-color: -swatch-500;
+    -fx-border-color: -color-10;
 }
 
 .combo-box-base>.label, .choice-box>.label {
@@ -236,22 +236,17 @@
 ------------------------------------------------------------------------------*/
 
 
-.data0.chart-bar, .data4.chart-bar, .data8.chart-bar {
-    -fx-background-color: -swatch-300;
+.default-color0.chart-bar {
+    -fx-bar-fill: -color-40;
 }
 
-.data1.chart-bar, .data5.chart-bar, .data9.chart-bar {
-    -fx-background-color: -swatch-100;
+.default-color1.chart-bar {
+    -fx-bar-fill: -color-50;
 }
 
-.data2.chart-bar, .data6.chart-bar, .data10.chart-bar {
-    -fx-background-color: -swatch-200;
+.default-color2.chart-bar {
+    -fx-bar-fill: -color-10;
 }
-
-.data3.chart-bar, .data7.chart-bar, .data11.chart-bar {
-    -fx-background-color: -swatch-500;
-}
-
 
 /*-----------------------------------------------------------------------------/
  *                                                                             *
@@ -277,8 +272,8 @@
 }
 
 .check-box:selected>.box {
-    -fx-border-color: -swatch-500;
-    -fx-background-color: -swatch-500;
+    -fx-border-color: -color-10;
+    -fx-background-color: -color-10;
 }
 
 .check-box:focused>.box {
@@ -310,7 +305,7 @@
 }
 
 .radio-menu-item:checked .label, .check-menu-item:checked .label {
-    -fx-text-fill: -swatch-500;
+    -fx-text-fill: -color-10;
 }
 
 .radio-menu-item:checked>.left-container>.radio, .check-menu-item:checked>.left-container>.check
@@ -377,11 +372,11 @@
  *                                                                             *
 ------------------------------------------------------------------------------*/
 .date-picker-popup .button {
-    -fx-background-color: -swatch-500;
+    -fx-background-color: -color-10;
 }
 
 .date-picker-popup>.month-year-pane {
-    -fx-background-color: -swatch-500;
+    -fx-background-color: -color-10;
 }
 
 .date-picker-popup>*>.spinner>.button>.left-arrow, .date-picker-popup>*>.spinner>.button>.right-arrow
@@ -450,7 +445,7 @@
 }
 
 .label-help-tip {
-    -fx-text-fill: -swatch-300;
+    -fx-text-fill: -color-40;
     -fx-font-size: 12;
 }
 
@@ -468,7 +463,7 @@
 ------------------------------------------------------------------------------*/
 .list-view:focused .list-cell:filled:focused:selected {
     -fx-background-color: -swatch-light-grey;
-    -fx-text-fill: -swatch-500;
+    -fx-text-fill: -color-10;
 }
 
 .list-view:hover .list-cell:hover {
@@ -524,11 +519,11 @@
 }
 
 .radio-button:focused:armed>.radio {
-    -fx-background-color: -swatch-500;
+    -fx-background-color: -color-10;
 }
 
 .radio-button:selected>.radio>.dot {
-    -fx-background-color: -swatch-500;
+    -fx-background-color: -color-10;
     -fx-background-insets: 0;
 }
 
@@ -592,7 +587,7 @@
 }
 
 .slider>.thumb {
-    -fx-background-color: -swatch-500;
+    -fx-background-color: -color-10;
 }
 
 /*-----------------------------------------------------------------------------/
@@ -607,7 +602,7 @@
 }
 
 .spinner:focused {
-    -fx-border-color: -swatch-500;
+    -fx-border-color: -color-10;
 }
 
 .spinner .text-field {
@@ -723,7 +718,7 @@
 }
 
 .text-area:focused, .text-field:focused {
-    -fx-border-color: -swatch-500;
+    -fx-border-color: -color-10;
 }
 
 /*-----------------------------------------------------------------------------/
@@ -772,19 +767,19 @@
 }
 
 .toolbar-colored {
-    -fx-background-color: -swatch-500;
+    -fx-background-color: -color-10;
     -fx-border-width: 0 0 2 0;
     -fx-border-color: -swatch-grey;
 }
 
 .toolbar-colored .button, .toolbar-colored .toggle-button {
-    -fx-background-color: -swatch-500;
+    -fx-background-color: -color-10;
     -fx-text-fill: white;
 }
 
 .toolbar-colored .button:pressed, .toolbar-colored .toggle-button:pressed,
 .toolbar-colored .toggle-button:selected {
-    -fx-background-color: -swatch-200;
+    -fx-background-color: -color-20;
 }
 
 .toolbar-colored .text {

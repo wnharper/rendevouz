@@ -11,7 +11,7 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.HBox?>
 
-<AnchorPane maxWidth="1120.0" prefHeight="800.0" prefWidth="1120.0" style="-fx-background-color: EDF0F4;" stylesheets="@materialDesign.css" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.CustomersController">
+<AnchorPane maxWidth="1120.0" prefHeight="800.0" prefWidth="1120.0" style="-fx-background-color: EDF0F4;" stylesheets="@rendezvousDesign.css" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.CustomersController">
    <children>
       <AnchorPane layoutX="184.0" layoutY="135.0" prefHeight="651.0" prefWidth="922.0" style="-fx-background-color: fff;">
          <padding>
@@ -21,13 +21,16 @@
             <TableView fx:id="customerTable" editable="true" layoutX="28.0" layoutY="26.0" prefHeight="602.0" prefWidth="874.0" tableMenuButtonVisible="true">
                <columns>
                   <TableColumn fx:id="id" prefWidth="50.0" text="ID" visible="false" />
-                  <TableColumn fx:id="name" minWidth="0.0" prefWidth="250.0" text="Name" />
-                  <TableColumn fx:id="address" minWidth="0.0" prefWidth="244.0" text="Address" />
+                  <TableColumn fx:id="name" minWidth="0.0" prefWidth="180.0" text="Name" />
+                  <TableColumn fx:id="address" minWidth="0.0" prefWidth="174.0" text="Address" />
+                  <TableColumn fx:id="phone" minWidth="0.0" prefWidth="140.0" text="Phone" />
                   <TableColumn fx:id="state" minWidth="0.0" prefWidth="160.0" text="State" />
-                  <TableColumn fx:id="country" minWidth="0.0" prefWidth="90.0" text="Country" />
+                  <TableColumn fx:id="country" minWidth="0.0" prefWidth="90.0" text="Country" visible="false" />
+                  <TableColumn fx:id="postCode" minWidth="0.0" prefWidth="90.0" text="Postal Code" />
                   <TableColumn fx:id="appointments" minWidth="0.0" prefWidth="110.0" text="Appointments" />
                </columns>
             </TableView>
+            <Label layoutX="732.0" layoutY="12.0" styleClass="label-help-tip" text="Click + icon to view more columns" />
          </children>
       </AnchorPane>
       <AnchorPane layoutX="-5.0" layoutY="112.0" prefHeight="688.0" prefWidth="175.0" style="-fx-background-color: #28004D;">
@@ -83,5 +86,15 @@
             </Label>
          </children>
       </HBox>
+      <AnchorPane fx:id="notification" layoutX="186.0" layoutY="13.0" prefHeight="48.0" prefWidth="920.0" styleClass="notification" visible="false">
+         <children>
+            <ImageView fitWidth="17.0" layoutX="15.0" layoutY="16.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@notification.png" />
+               </image>
+            </ImageView>
+            <Label fx:id="notification_text" layoutX="52.0" layoutY="17.0" styleClass="notification-text" text="Label" />
+         </children>
+      </AnchorPane>
    </children>
 </AnchorPane>

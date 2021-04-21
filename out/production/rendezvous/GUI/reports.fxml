@@ -4,6 +4,7 @@
 <?import javafx.scene.chart.BarChart?>
 <?import javafx.scene.chart.CategoryAxis?>
 <?import javafx.scene.chart.NumberAxis?>
+<?import javafx.scene.chart.StackedBarChart?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.Label?>
@@ -14,7 +15,7 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.HBox?>
 
-<AnchorPane maxWidth="1120.0" prefHeight="800.0" prefWidth="1120.0" style="-fx-background-color: EDF0F4;" stylesheets="@materialDesign.css" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.Reports">
+<AnchorPane maxWidth="1120.0" prefHeight="800.0" prefWidth="1120.0" style="-fx-background-color: EDF0F4;" stylesheets="@rendezvousDesign.css" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.Reports">
     <children>
         <AnchorPane layoutX="-5.0" layoutY="112.0" prefHeight="688.0" prefWidth="175.0" style="-fx-background-color: #28004D;">
             <children>
@@ -63,29 +64,21 @@
       </HBox>
       <AnchorPane layoutX="188.0" layoutY="14.0" prefHeight="456.0" prefWidth="914.0" style="-fx-background-color: fff;">
          <children>
-            <BarChart fx:id="locationChart" legendVisible="false" prefHeight="268.0" prefWidth="519.0">
+            <BarChart fx:id="locationChart" legendVisible="false" prefHeight="243.0" prefWidth="519.0">
                <xAxis>
                   <CategoryAxis label="Locations" side="BOTTOM" fx:id="x2" />
                </xAxis>
                <yAxis>
-                  <NumberAxis fx:id="y2" label="Avg appointment time (Minutes)" side="LEFT" />
+                  <NumberAxis fx:id="y2" label="Avg appt time (minutes)" side="LEFT" />
                </yAxis>
             </BarChart>
-            <BarChart fx:id="typeChart" layoutX="531.0" layoutY="-1.0" legendVisible="false" prefHeight="268.0" prefWidth="382.0">
+            <BarChart fx:id="typeChart" layoutX="531.0" layoutY="-1.0" legendVisible="false" prefHeight="243.0" prefWidth="382.0">
                <xAxis>
                   <CategoryAxis label="Appointment Type" side="BOTTOM" fx:id="x1" />
                </xAxis>
                <yAxis>
                   <NumberAxis fx:id="y1" label="Number of appointments" side="LEFT" />
                </yAxis>
-            </BarChart>
-            <BarChart fx:id="monthChart" layoutX="-1.0" layoutY="251.0" legendVisible="false" prefHeight="256.0" prefWidth="914.0">
-              <xAxis>
-                <CategoryAxis label="Months" side="BOTTOM" fx:id="x" />
-              </xAxis>
-              <yAxis>
-                <NumberAxis fx:id="y" label="Number of appointments" side="LEFT" />
-              </yAxis>
             </BarChart>
                 <Label layoutX="724.0" layoutY="501.0" styleClass="label-help-tip" text="Click + icon to view more columns" />
             <ComboBox fx:id="contacts" layoutX="15.0" layoutY="484.0" prefHeight="42.0" prefWidth="225.0" promptText="Filter appointments by contact" />
@@ -102,6 +95,14 @@
                         <TableColumn fx:id="customer" minWidth="0.0" prefWidth="140.0" text="Customer" />
                     </columns>
                 </TableView>
+            <StackedBarChart fx:id="monthChart" layoutX="-3.0" layoutY="245.0" prefHeight="243.0" prefWidth="914.0">
+              <xAxis>
+                <CategoryAxis side="BOTTOM" fx:id="x" />
+              </xAxis>
+              <yAxis>
+                <NumberAxis fx:id="y" label="Number of Appointments" side="LEFT" />
+              </yAxis>
+            </StackedBarChart>
          </children>
       </AnchorPane>
     </children>

@@ -38,6 +38,15 @@ import java.util.function.Predicate;
  * It enables a user to view and filter current appointments. It provides notifications
  * for upcoming appointments.
  *
+ * <h3> Lambda #1 - radio button listener - line 225</h3>
+ * Radio button listener lambda function allows us to concisely define what should happen when
+ * the radio button is selected. The third argument in the lambda function allows us to setup
+ * a boolean function in order to specify another function when the button is selected.
+ *
+ * <h3>Lambda #2 - run later - line 257</h3>
+ * The runLater method accepts the Runnable interface as an argument. Using a lambda expression
+ * we can, with minimal code, pass in a method that extends the runnable interface.
+ *
  * @author  Warren Harper
  * @version 1.0
  * @since   2021-04-20
@@ -86,10 +95,8 @@ public class AppointmentsController implements Initializable {
         /*
         Upcoming appointment notification
          */
-        // Fade out notification bar
-        FadeTransition ft = new FadeTransition(Duration.millis(300), notification);
-        ft.setFromValue(1.0);
-        ft.setToValue(0.0);
+
+
         // Set notification text
         notification_text.setText("There are no appointments in the next 15 minutes");
         // Acquire current time
@@ -101,10 +108,9 @@ public class AppointmentsController implements Initializable {
                 notification_text.setText("Upcoming appointment with " + appointment.getCustomer() + " starting at " + formatter.format(appointment.getStart()));
             }
         }
-        // Hide notification bar after 6 seconds
-        PauseTransition delay = new PauseTransition(Duration.seconds(6));
-        delay.setOnFinished( event -> ft.play());
-        delay.play();
+
+        // display notification
+        Alerts.notify(4, notification);
 
 
         // set user name
@@ -210,29 +216,31 @@ public class AppointmentsController implements Initializable {
         appTable.setItems(sortedData);
 
         LocalDateTime dateTime = LocalDateTime.now();
-        /*
-         * Radio button functionality
+        /**
+         * <h2> Lambda #1 - radio button listener</h2>
+         * Radio button listener lambda function allows us to concisely define what should happen when
+         * the radio button is selected. The third argument in the lambda function allows us to setup
+         * a boolean function in order to specify another function when the button is selected.
          */
-        // Filter appointments occurring in the next 7 days
-        week.selectedProperty().addListener(((obs, wasPreviouslySelected, isNowSelected) -> {
+        week.selectedProperty().addListener(((obs, wasPreviouslySelected, isNowSelected) -> { // lambda
             if (isNowSelected) {
                 Predicate<Appointment> predicate = i -> Time.getWeekOfYear(i.getStart()) == Time.getWeekOfYear(dateTime);
-                filteredAppointments.setPredicate(predicate);
+                filteredAppointments.setPredicate(predicate); // Filter appointments occurring in the current week
             }
         }));
 
-        // Filter appointments occurring in the next month
-        month.selectedProperty().addListener(((obs, wasPreviouslySelected, isNowSelected) -> {
+
+        month.selectedProperty().addListener(((obs, wasPreviouslySelected, isNowSelected) -> { // lambda
             if (isNowSelected) {
-                Predicate<Appointment> predicate = i -> i.getStart().getMonth() == dateTime.getMonth();
-                filteredAppointments.setPredicate(predicate);
+                Predicate<Appointment> predicate = i -> i.getStart().getMonth() == dateTime.getMonth(); // lambda
+                filteredAppointments.setPredicate(predicate); // Filter appointments occurring in the current month
             }
         }));
 
         // Show all appointments
-        all.selectedProperty().addListener(((obs, wasPreviouslySelected, isNowSelected) -> {
+        all.selectedProperty().addListener(((obs, wasPreviouslySelected, isNowSelected) -> {  // lambda
             if (isNowSelected) {
-                Predicate<Appointment> predicate = i -> i.getId() >= 0;
+                Predicate<Appointment> predicate = i -> i.getId() >= 0; // lambda
                 filteredAppointments.setPredicate(predicate);
             }
         }));
@@ -241,7 +249,14 @@ public class AppointmentsController implements Initializable {
         timeSelect.selectToggle(this.week);
 
         // Set focus to search box
+        /**
+         * <h2>Lambda #2 - run later</h2>
+         * The runLater method accepts the Runnable interface as an argument. Using a lambda expression
+         * we can, with minimal code, pass in a method that extends the runnable interface.
+         */
         Platform.runLater(() -> search.requestFocus());
+
+
 
         // Sort table by appointment start date/time
         appTable.getSortOrder().setAll(start);
@@ -308,6 +323,11 @@ public class AppointmentsController implements Initializable {
             // Delete selected row
             DBAppointments.deleteAppointment(appTable.getSelectionModel().getSelectedItem().getId());
             appointments.remove(appTable.getSelectionModel().getSelectedItem());
+
+            // display notification
+            notification_text.setText("Appointment deleted");
+
+            Alerts.notify(2, notification);
         }
     }
 

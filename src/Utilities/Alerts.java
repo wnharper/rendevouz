@@ -1,6 +1,10 @@
 package Utilities;
 
+import javafx.animation.FadeTransition;
+import javafx.animation.PauseTransition;
 import javafx.scene.control.*;
+import javafx.scene.layout.AnchorPane;
+import javafx.util.Duration;
 
 /**
  * <h2>Alerts</h2>
@@ -114,6 +118,34 @@ public class Alerts {
             errorLabel.setText("");
             return false;
         }
+    }
+
+    /**
+     * Method fades an Anchor pane object in and out
+     * @param displayTime length in second to display pane
+     * @param anchorPane
+     */
+
+    public static void notify(int displayTime, AnchorPane anchorPane) {
+
+
+        // Fade in notification bar
+        FadeTransition fadeIn = new FadeTransition(Duration.millis(300), anchorPane);
+        fadeIn.setFromValue(0.0);
+        anchorPane.setVisible(true);
+        fadeIn.setToValue(1.0);
+        fadeIn.play();
+
+
+        // Fade out notification bar
+        FadeTransition fadeOut = new FadeTransition(Duration.millis(300), anchorPane);
+        fadeOut.setFromValue(1.0);
+        fadeOut.setToValue(0.0);
+
+        // Hide notification bar after 5 seconds
+        PauseTransition delay = new PauseTransition(Duration.seconds(displayTime));
+        delay.setOnFinished( event -> fadeOut.play());
+        delay.play();
     }
 
 

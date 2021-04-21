@@ -10,6 +10,7 @@ import javafx.scene.chart.XYChart;
 
 import java.sql.*;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 
 /**
  * <h2>Data Base Appointments</h2>
@@ -204,26 +205,26 @@ public class DBAppointments {
      *
      * @return Appointments by month count
      */
-    public static XYChart.Series appointmentCountData() {
+    public static ArrayList<XYChart.Series> appointmentCountData() {
 
         // Initialize chart
-        XYChart.Series chartData = new XYChart.Series();
+        ArrayList<XYChart.Series> months = new ArrayList<>();
+
         try {
-            String sqlQuery = "SELECT DATE_FORMAT(start, '%M') AS Month, COUNT(*) AS 'Count' FROM appointments GROUP BY DATE_FORMAT(start, '%M') ORDER BY\n" +
-                    "FIELD(Month,\n" +
-                    "    'January',\n" +
-                    "    'February',\n" +
-                    "    'March',\n" +
-                    "    'April',\n" +
-                    "    'May',\n" +
-                    "    'June',\n" +
-                    "    'July',\n" +
-                    "    'August',\n" +
-                    "    'September',\n" +
-                    "    'October',\n" +
-                    "    'November',\n" +
-                    "    'December'\n" +
-                    ");";
+            String sqlQuery = "SELECT Type, \n" +
+                    "\tSUM(month(start) = 1) AS 'Jan', \n" +
+                    "    SUM(month(start) = 2) AS 'Feb',\n" +
+                    "    SUM(month(start) = 3) AS 'Mar',\n" +
+                    "    SUM(month(start) = 4) AS 'Apr',\n" +
+                    "    SUM(month(start) = 5) AS 'May',\n" +
+                    "    SUM(month(start) = 6) AS 'Jun',\n" +
+                    "    SUM(month(start) = 7) AS 'Jul',\n" +
+                    "    SUM(month(start) = 8) AS 'Aug',\n" +
+                    "    SUM(month(start) = 9) AS 'Sep',\n" +
+                    "    SUM(month(start) = 10) AS 'Oct',\n" +
+                    "    SUM(month(start) = 11) AS 'Nov',\n" +
+                    "    SUM(month(start) = 12) AS 'Dec'\n" +
+                    "    from appointments group by type;";
 
             PreparedStatement pStatement = DBConnection.getDbConnection().prepareStatement(sqlQuery);
 
@@ -231,15 +232,43 @@ public class DBAppointments {
 
             while (resultSet.next()) {
 
-                String month = resultSet.getString("Month");
-                int count = resultSet.getInt("Count");
-                chartData.getData().add(new XYChart.Data(month, count));
+                String type = resultSet.getString("Type");
+                int jan = resultSet.getInt("Jan");
+                int feb = resultSet.getInt("Feb");
+                int mar = resultSet.getInt("Mar");
+                int apr = resultSet.getInt("Apr");
+                int may = resultSet.getInt("May");
+                int jun = resultSet.getInt("Jun");
+                int jul = resultSet.getInt("Jul");
+                int aug = resultSet.getInt("Aug");
+                int sep = resultSet.getInt("Sep");
+                int oct = resultSet.getInt("Oct");
+                int nov = resultSet.getInt("Nov");
+                int dec = resultSet.getInt("Dec");
+
+                XYChart.Series chartData = new XYChart.Series();
+                chartData.setName(type);
+                chartData.getData().add(new XYChart.Data("Jan", jan));
+                chartData.getData().add(new XYChart.Data("Feb", feb));
+                chartData.getData().add(new XYChart.Data("Mar", mar));
+                chartData.getData().add(new XYChart.Data("Apr", apr));
+                chartData.getData().add(new XYChart.Data("May", may));
+                chartData.getData().add(new XYChart.Data("Jun", jun));
+                chartData.getData().add(new XYChart.Data("Jul", jul));
+                chartData.getData().add(new XYChart.Data("Aug", aug));
+                chartData.getData().add(new XYChart.Data("Sep", sep));
+                chartData.getData().add(new XYChart.Data("Oct", oct));
+                chartData.getData().add(new XYChart.Data("Nov", nov));
+                chartData.getData().add(new XYChart.Data("Dec", dec));
+
+
+                months.add(chartData);
 
             }
         } catch (SQLException throwables) {
             throwables.printStackTrace();
         }
-        return chartData;
+        return months;
     }
 
     /**

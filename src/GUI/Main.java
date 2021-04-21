@@ -8,8 +8,8 @@ import javafx.scene.Scene;
 import javafx.stage.Stage;
 
 /**
- * <h1>Rendevouz</h1>
- * Rendevouz is an application designed to create, store and edit individual
+ * <h1>Rendezvous</h1>
+ * Rendezvous is an application designed to create, store and edit individual
  * Customer information. The user is then able to book appointments with
  * stored customers.
  *
@@ -23,7 +23,7 @@ public class Main extends Application {
     @Override
     public void start(Stage primaryStage) throws Exception{
         Parent root = FXMLLoader.load(getClass().getResource("login.fxml"));
-        primaryStage.setTitle("Rendevouz");
+        primaryStage.setTitle("Rendezvous");
         primaryStage.setScene(new Scene(root, 1120 , 800));
         primaryStage.show();
     }

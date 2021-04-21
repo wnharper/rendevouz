@@ -1,13 +1,13 @@
 *************************************************************************
-*				      					*
-*				      					*
-*               		RENDEVOUZ             			*
-*				     					*
-*				     					*
+*				      					                                *
+*				      					                                *
+*               	            RENDEZVOUS             			        *
+*				     					                                *
+*				     				                                	*
 *************************************************************************
 
 INFORMATION
-Rendevouz is an application designed to create, store and edit individual 
+Rendezvous is an application designed to create, store and edit individual 
 Customer information. The user is then able to book appointments with 
 stored customers.
 
@@ -20,6 +20,9 @@ stored customers.
 @JavaFX - SDK-16
 @MySQL Driver - 8.0.22
 
+NOTE: The customer ID and Appointment ID are purposefully hidden from the
+user as they are not editable by the user and to keep the UI clean.
+
 - HOW TO USE THE PROGRAM
 Upon executing the program, a login form will present itself. Login using
 the credentials username: test password: test
@@ -30,7 +33,8 @@ notified if there is an appointment starting in the next 15 minutes.
 
 The default filter is 'This week' which will show appointments in the 
 current week. You can change this filter using the radio buttons near the
-top. On this screen you can create, edit or delete appointments.
+top. On this screen you can create, edit or delete appointments. You can
+view more appointment information (columns) by clicking '+' sign in the table.
 
 The purple navigation bar down the left hand side will allow you to navigate
 to the customers screen where you can view, create, edit or delete customers. 
@@ -40,5 +44,11 @@ various reports that are relevant to appointments.
 - ADDITIONAL REPORT
 In the top left of the reports screen, you will find a report that shows the
 average length (in minutes) of appointments by location.
+
+- LAMBDA #1
+AppointmentsController - line 225
+
+- LAMBDA #2
+AppointmentsController - line 257
 
 
