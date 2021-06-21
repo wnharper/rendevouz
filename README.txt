@@ -1,9 +1,9 @@
 *************************************************************************
-*				      					                                *
-*				      					                                *
-*               	            RENDEZVOUS             			        *
-*				     					                                *
-*				     				                                	*
+*				      					                                                *
+*				      					                                                *
+*               	            RENDEZVOUS             			              *
+*				     					                                                  *
+*				     				                                	                  *
 *************************************************************************
 
 INFORMATION
@@ -12,7 +12,6 @@ Customer information. The user is then able to book appointments with
 stored customers.
 
 @Author - Warren Harper				  
-@Contact - wharp15@wgu.edu
 @Date - April 21, 2021
 
 @IDE - IntelliJ IDEA Ultimate 2021.1
@@ -45,10 +44,5 @@ various reports that are relevant to appointments.
 In the top left of the reports screen, you will find a report that shows the
 average length (in minutes) of appointments by location.
 
-- LAMBDA #1
-AppointmentsController - line 225
-
-- LAMBDA #2
-AppointmentsController - line 257
 
 
